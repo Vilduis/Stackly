@@ -7,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button"
 export function SiteHeader() {
   return (
     <header className="site-header sticky top-0 z-50">
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center gap-2 px-6">
+      <div className="container-page flex h-14 items-center gap-2">
         <Link
           href="/"
           className="mr-auto inline-flex items-center gap-2 font-heading text-lg tracking-tight"

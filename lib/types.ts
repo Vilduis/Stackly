@@ -1,4 +1,3 @@
-
 export type CategorySlug =
   | "frontend"
   | "backend"
@@ -20,6 +19,11 @@ export type Category = {
   description: string
 }
 
+type StartStep = {
+  text: string
+  code?: string
+}
+
 export type Tool = {
   slug: string
   name: string
@@ -28,8 +32,11 @@ export type Tool = {
   description: string
   website: string
   docs?: string
-  repo?: string
   tags: string[]
   pricing: Pricing
   level: Level
+  start: StartStep[]
+  useIf: string[]
+  avoidIf: string[]
+  pairsWith: string[]
 }

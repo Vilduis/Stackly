@@ -41,7 +41,7 @@ import {
   siVuedotjs,
 } from "simple-icons"
 
-export type Gradiente = {
+type Gradiente = {
   x1: number
   y1: number
   x2: number
@@ -56,15 +56,8 @@ export type Logo = {
   dark: string | null
   gradient?: Gradiente
   fondo?: string
-  /**
-   * Ancho partido por alto del viewBox. Lo usa components/tool-mark.tsx para no
-   * aplastar los logos apaisados: metidos en un cuadrado, el navegador los
-   * encoge hasta que quepan a lo ancho y se quedan en una tira. El de Motion,
-   * que es 2,86 veces mas ancho que alto, se dibujaba a 7 px de alto.
-   */
   ratio: number
 }
-
 
 const BOX_24 = "0 0 24 24"
 
@@ -110,11 +103,10 @@ const COLORES: Record<string, { light: string; dark: string } | null> = {
   motion: { light: "#E0D500", dark: "#FFF312" },
 }
 
-function marca(
-  slug: string,
-  icono: { path: string; hex: string },
-  viewBox = BOX_24
-): Logo {
+type Icono = { path: string; hex: string; viewBox?: string }
+
+function marca(slug: string, icono: Icono): Logo {
+  const viewBox = icono.viewBox ?? BOX_24
   const oficial = `#${icono.hex}`
   const color =
     slug in COLORES ? COLORES[slug] : { light: oficial, dark: oficial }
@@ -142,67 +134,62 @@ const MOTION = {
   hex: "FFF312",
 }
 
-const LOGOS: Record<string, Logo> = {
-  // Frontend
-  react: marca("react", siReact),
-  nextjs: marca("nextjs", siNextdotjs),
-  vue: marca("vue", siVuedotjs),
-  angular: marca("angular", siAngular),
-  svelte: marca("svelte", siSvelte),
-  astro: marca("astro", siAstro),
+const ICONOS: Record<string, Icono> = {
+  react: siReact,
+  nextjs: siNextdotjs,
+  vue: siVuedotjs,
+  angular: siAngular,
+  svelte: siSvelte,
+  astro: siAstro,
 
-  // Backend
-  nodejs: marca("nodejs", siNodedotjs),
-  express: marca("express", siExpress),
-  fastapi: marca("fastapi", siFastapi),
-  django: marca("django", siDjango),
-  flask: marca("flask", siFlask),
-  "spring-boot": marca("spring-boot", siSpringboot),
-  laravel: marca("laravel", siLaravel),
-  nestjs: marca("nestjs", siNestjs),
+  nodejs: siNodedotjs,
+  express: siExpress,
+  fastapi: siFastapi,
+  django: siDjango,
+  flask: siFlask,
+  "spring-boot": siSpringboot,
+  laravel: siLaravel,
+  nestjs: siNestjs,
 
-  // Bases de datos
-  neon: marca("neon", siNeon),
-  supabase: marca("supabase", siSupabase),
-  firebase: marca("firebase", siFirebase),
-  "mongodb-atlas": marca("mongodb-atlas", siMongodb),
+  neon: siNeon,
+  supabase: siSupabase,
+  firebase: siFirebase,
+  "mongodb-atlas": siMongodb,
 
-  // Deploy
-  vercel: marca("vercel", siVercel),
-  netlify: marca("netlify", siNetlify),
-  "github-pages": marca("github-pages", siGithubpages),
-  railway: marca("railway", siRailway),
-  render: marca("render", siRender),
-  heroku: marca("heroku", HEROKU, "0 0 256 284.4"),
-  "cloudflare-workers": marca("cloudflare-workers", siCloudflareworkers),
+  vercel: siVercel,
+  netlify: siNetlify,
+  "github-pages": siGithubpages,
+  railway: siRailway,
+  render: siRender,
+  heroku: { ...HEROKU, viewBox: "0 0 256 284.4" },
+  "cloudflare-workers": siCloudflareworkers,
 
-  // Componentes UI
-  "shadcn-ui": marca("shadcn-ui", siShadcnui),
-  heroui: marca("heroui", siHeroui),
-  "material-ui": marca("material-ui", siMui),
-  mantine: marca("mantine", siMantine),
-  "chakra-ui": marca("chakra-ui", siChakraui),
+  "shadcn-ui": siShadcnui,
+  heroui: siHeroui,
+  "material-ui": siMui,
+  mantine: siMantine,
+  "chakra-ui": siChakraui,
 
-  // Estilos
-  tailwindcss: marca("tailwindcss", siTailwindcss),
-  bootstrap: marca("bootstrap", siBootstrap),
-  sass: marca("sass", siSass),
-  "styled-components": marca("styled-components", siStyledcomponents),
+  tailwindcss: siTailwindcss,
+  bootstrap: siBootstrap,
+  sass: siSass,
+  "styled-components": siStyledcomponents,
 
-  // Animaciones
-  motion: marca("motion", MOTION, "0 0 1103 386"),
-  gsap: marca("gsap", siGsap),
-  animejs: marca("animejs", siAnimedotjs),
-  threejs: marca("threejs", siThreedotjs),
+  motion: { ...MOTION, viewBox: "0 0 1103 386" },
+  gsap: siGsap,
+  animejs: siAnimedotjs,
+  threejs: siThreedotjs,
 
-  // Iconos
-  lucide: marca("lucide", siLucide),
-  "simple-icons": marca("simple-icons", siSimpleicons),
+  lucide: siLucide,
+  "simple-icons": siSimpleicons,
 
-  // Inspiración
-  dribbble: marca("dribbble", siDribbble),
-  awwwards: marca("awwwards", siAwwwards),
+  dribbble: siDribbble,
+  awwwards: siAwwwards,
 }
+
+const LOGOS: Record<string, Logo> = Object.fromEntries(
+  Object.entries(ICONOS).map(([slug, icono]) => [slug, marca(slug, icono)])
+)
 
 export function getLogo(slug: string): Logo | null {
   return LOGOS[slug] ?? null

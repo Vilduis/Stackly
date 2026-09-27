@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google"
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 
 import "./globals.css"
 import { Aurora } from "@/components/aurora"
@@ -10,7 +10,7 @@ import { SITE_NAME } from "@/lib/metadata"
 import { SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+const fontSans = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -64,7 +64,7 @@ export default function RootLayout({
         "dark antialiased",
         fontMono.variable,
         "font-sans",
-        inter.variable,
+        fontSans.variable,
         instrumentSerif.variable
       )}
     >

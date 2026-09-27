@@ -7,6 +7,7 @@ import { HeroPreview } from "@/components/hero-preview"
 import { HomeSearch } from "@/components/home-search"
 import { SearchSuggestions } from "@/components/search-suggestions"
 import { Spotlight } from "@/components/spotlight"
+import { ToneEdge } from "@/components/tone-edge"
 import { ToolMark } from "@/components/tool-mark"
 import {
   Card,
@@ -43,11 +44,15 @@ export default async function HomePage() {
 
   return (
     <main className="hero-grid">
-      <div className="mx-auto w-full max-w-5xl px-6 py-16 sm:py-24">
+      <div className="container-page pt-16 pb-4 sm:pt-24 sm:pb-8">
         <section className="relative grid items-center gap-12 lg:grid-cols-5 lg:gap-16">
           <div className="lg:col-span-3">
+            <p className="eyebrow mb-5">
+              {tools.length} herramientas · {CATEGORIES.length} categorías
+            </p>
             <h1 className="max-w-xl font-heading text-hero tracking-tight text-balance">
-              Elige las herramientas de tu <span className="italic">próxima</span> web
+              Elige las herramientas de tu{" "}
+              <span className="italic">próxima</span> web
             </h1>
             <p className="mt-6 max-w-lg text-base text-pretty text-muted-foreground sm:text-lg">
               Si sabes qué quieres construir pero no con qué, aquí tienes las
@@ -62,10 +67,6 @@ export default async function HomePage() {
             <div className="mt-4">
               <SearchSuggestions />
             </div>
-
-            <p className="mt-8 text-sm text-muted-foreground">
-              {tools.length} herramientas en {CATEGORIES.length} categorías.
-            </p>
           </div>
 
           <div className="lg:col-span-2">
@@ -74,6 +75,7 @@ export default async function HomePage() {
         </section>
 
         <section className="mt-20 sm:mt-28">
+          <p className="eyebrow mb-3">Explora por área</p>
           <h2 className="font-heading text-section tracking-tight">
             Categorías
           </h2>
@@ -93,12 +95,15 @@ export default async function HomePage() {
                   data-spotlight
                   className="spotlight-glow h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:ring-tone/35"
                 >
+                  <ToneEdge />
                   <CardHeader>
                     <div className="flex items-center gap-3">
-                      <CategoryIcon
-                        category={category.slug}
-                        className="size-5 text-muted-foreground transition-colors group-hover:text-tone"
-                      />
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-tone/10 ring-1 ring-tone/25 transition-colors group-hover:bg-tone/15">
+                        <CategoryIcon
+                          category={category.slug}
+                          className="size-4.5 text-tone"
+                        />
+                      </span>
                       <CardTitle className="flex-1">{category.name}</CardTitle>
                       <ArrowRight
                         aria-hidden
@@ -119,7 +124,7 @@ export default async function HomePage() {
                           />
                         ))}
                       </div>
-                      <span className="text-xs text-muted-foreground tabular-nums">
+                      <span className="font-mono text-xs text-muted-foreground tabular-nums">
                         {counts[category.slug] ?? 0} herramientas
                       </span>
                     </div>

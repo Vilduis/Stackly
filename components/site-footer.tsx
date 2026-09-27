@@ -11,8 +11,8 @@ export async function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="brand-edge brand-edge-top mt-24 border-t border-border">
-      <div className="mx-auto w-full max-w-5xl px-6 py-14">
+    <footer className="brand-edge brand-edge-top mt-16 border-t border-border">
+      <div className="container-page py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <Link

@@ -15,7 +15,7 @@ export function SearchSuggestions() {
           href={`/buscar?q=${encodeURIComponent(term)}`}
           className={cn(
             badgeVariants({ variant: "outline" }),
-            "text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            "font-mono text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           )}
         >
           {term}

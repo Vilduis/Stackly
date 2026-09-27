@@ -19,7 +19,7 @@ export default async function SearchPage() {
   const tools = await getTools()
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-6 py-16">
+    <main className="container-page py-16">
       <Link
         href="/"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"

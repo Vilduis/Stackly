@@ -47,10 +47,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const tools = await getToolsByCategory(category.slug)
 
   return (
-    <main
-      style={toneStyle(category.slug)}
-      className="mx-auto w-full max-w-5xl px-6 py-16"
-    >
+    <main style={toneStyle(category.slug)} className="container-page py-16">
       <Link
         href="/"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-tone"

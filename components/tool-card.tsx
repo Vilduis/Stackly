@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { BookOpen, ExternalLink } from "lucide-react"
 
+import { ToneEdge } from "@/components/tone-edge"
+import { LevelBadge, PricingBadge } from "@/components/tool-badges"
 import { ToolMark } from "@/components/tool-mark"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -30,6 +32,7 @@ export function ToolCard({
       style={toneStyle(tool.category)}
       className="spotlight-glow h-full transition duration-200 hover:-translate-y-0.5 hover:shadow-md hover:ring-tone/35"
     >
+      <ToneEdge />
       <CardHeader>
         <div className="flex items-center gap-3">
           <ToolMark tool={tool} />
@@ -52,13 +55,13 @@ export function ToolCard({
               {category.name}
             </Badge>
           ) : null}
-          <Badge variant="secondary">{tool.pricing}</Badge>
-          <Badge variant="outline">{tool.level}</Badge>
+          <PricingBadge pricing={tool.pricing} />
+          <LevelBadge level={tool.level} />
           {tool.tags.slice(0, 3).map((tag) => (
             <Badge
               key={tag}
               variant="outline"
-              className="text-muted-foreground"
+              className="font-mono text-muted-foreground"
             >
               {tag}
             </Badge>

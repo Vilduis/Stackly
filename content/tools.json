@@ -7,10 +7,33 @@
     "description": "React divide la interfaz en componentes reutilizables y actualiza la pantalla sola cuando cambian los datos. Es la opción con más ofertas de trabajo, más tutoriales y más librerías compatibles. No incluye rutas ni peticiones: eso lo eliges tú o lo pones un framework como Next.js.",
     "website": "https://react.dev",
     "docs": "https://react.dev/learn",
-    "repo": "https://github.com/facebook/react",
     "tags": ["componentes", "spa", "javascript"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea el proyecto con Vite.",
+        "code": "npm create vite@latest mi-app -- --template react"
+      },
+      {
+        "text": "Entra en la carpeta e instala las dependencias.",
+        "code": "cd mi-app && npm install"
+      },
+      {
+        "text": "Arranca el servidor de desarrollo.",
+        "code": "npm run dev"
+      }
+    ],
+    "useIf": [
+      "Quieres la opción con más empleo, tutoriales y librerías.",
+      "Tu web tiene mucha interacción: paneles, formularios, estados.",
+      "Piensas usar después Next.js o React Native."
+    ],
+    "avoidIf": [
+      "Solo necesitas una web de contenido casi estática.",
+      "No quieres elegir tú rutas, datos y estructura."
+    ],
+    "pairsWith": ["tailwindcss", "shadcn-ui", "vercel"]
   },
   {
     "slug": "nextjs",
@@ -20,10 +43,32 @@
     "description": "Next.js añade a React lo que le falta para hacer una web completa: rutas por carpetas, renderizado en el servidor, optimización de imágenes y API propia. Es la opción por defecto si quieres que tu web salga bien en Google.",
     "website": "https://nextjs.org",
     "docs": "https://nextjs.org/docs",
-    "repo": "https://github.com/vercel/next.js",
     "tags": ["react", "ssr", "seo", "fullstack"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Crea el proyecto y responde a las preguntas del asistente.",
+        "code": "npx create-next-app@latest mi-app"
+      },
+      {
+        "text": "Entra en la carpeta y arranca el servidor.",
+        "code": "cd mi-app && npm run dev"
+      },
+      {
+        "text": "Edita app/page.tsx y verás los cambios al guardar."
+      }
+    ],
+    "useIf": [
+      "Te importa el SEO y que la web cargue rápido.",
+      "Quieres frontend y API en el mismo proyecto.",
+      "Vas a publicar en Vercel sin configurar nada."
+    ],
+    "avoidIf": [
+      "Aún no te manejas con React.",
+      "Tu web es una sola página sencilla sin servidor."
+    ],
+    "pairsWith": ["tailwindcss", "vercel", "supabase"]
   },
   {
     "slug": "vue",
@@ -33,10 +78,33 @@
     "description": "Vue separa plantilla, lógica y estilos en un solo archivo, lo que lo hace fácil de leer cuando vienes de HTML y CSS. Tiene documentación excelente en español y un ecosistema oficial (router, estado) que evita tener que elegir librerías sueltas.",
     "website": "https://vuejs.org",
     "docs": "https://vuejs.org/guide/introduction.html",
-    "repo": "https://github.com/vuejs/core",
     "tags": ["componentes", "spa", "javascript"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea el proyecto con el asistente oficial.",
+        "code": "npm create vue@latest"
+      },
+      {
+        "text": "Entra en la carpeta e instala las dependencias.",
+        "code": "cd mi-app && npm install"
+      },
+      {
+        "text": "Arranca el servidor de desarrollo.",
+        "code": "npm run dev"
+      }
+    ],
+    "useIf": [
+      "Vienes de HTML y CSS y quieres una curva suave.",
+      "Prefieres router y estado oficiales, sin elegir librerías.",
+      "Buscas documentación clara y en español."
+    ],
+    "avoidIf": [
+      "Buscas el ecosistema con más ofertas de trabajo.",
+      "Necesitas una librería de componentes concreta que solo existe para React."
+    ],
+    "pairsWith": ["tailwindcss", "netlify", "firebase"]
   },
   {
     "slug": "angular",
@@ -46,10 +114,33 @@
     "description": "Angular trae todo decidido de fábrica: estructura de carpetas, rutas, formularios, peticiones HTTP y tests. Eso lo hace más pesado al principio, pero muy predecible en proyectos grandes y equipos numerosos. Usa TypeScript de forma obligatoria.",
     "website": "https://angular.dev",
     "docs": "https://angular.dev/overview",
-    "repo": "https://github.com/angular/angular",
     "tags": ["typescript", "spa", "empresarial"],
     "pricing": "gratis",
-    "level": "avanzado"
+    "level": "avanzado",
+    "start": [
+      {
+        "text": "Instala la CLI de Angular.",
+        "code": "npm install -g @angular/cli"
+      },
+      {
+        "text": "Crea el proyecto.",
+        "code": "ng new mi-app"
+      },
+      {
+        "text": "Entra en la carpeta y arranca el servidor.",
+        "code": "cd mi-app && ng serve"
+      }
+    ],
+    "useIf": [
+      "Trabajas en un equipo grande o en una empresa.",
+      "Quieres que todo venga decidido: rutas, formularios, HTTP y tests.",
+      "Te gusta TypeScript estricto desde el principio."
+    ],
+    "avoidIf": [
+      "Estás empezando y quieres ver resultados rápido.",
+      "Es una web pequeña o un proyecto personal."
+    ],
+    "pairsWith": ["material-ui", "nestjs", "firebase"]
   },
   {
     "slug": "svelte",
@@ -59,10 +150,32 @@
     "description": "Svelte hace su trabajo al compilar, no en el navegador, así que el resultado final es muy pequeño y rápido. Se escribe con mucho menos código repetido que React. Su ecosistema es más chico, pero su framework oficial SvelteKit cubre lo esencial.",
     "website": "https://svelte.dev",
     "docs": "https://svelte.dev/docs",
-    "repo": "https://github.com/sveltejs/svelte",
     "tags": ["compilador", "ligero", "javascript"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea el proyecto con SvelteKit.",
+        "code": "npx sv create mi-app"
+      },
+      {
+        "text": "Entra en la carpeta y arranca el servidor.",
+        "code": "cd mi-app && npm run dev"
+      },
+      {
+        "text": "Edita src/routes/+page.svelte para ver tu primera página."
+      }
+    ],
+    "useIf": [
+      "Quieres escribir menos código que en React.",
+      "Te importa que la web pese poco y vaya rápida.",
+      "Es un proyecto personal o un equipo pequeño."
+    ],
+    "avoidIf": [
+      "Necesitas muchas librerías de terceros ya hechas.",
+      "Buscas el framework con más demanda laboral."
+    ],
+    "pairsWith": ["tailwindcss", "vercel", "supabase"]
   },
   {
     "slug": "astro",
@@ -72,10 +185,32 @@
     "description": "Astro genera HTML estático y solo activa los componentes que marcas como interactivos, así que una web de contenido acaba pesando muy poco. Deja mezclar React, Vue y Svelte en el mismo proyecto sin elegir bando. Es la opción natural para blogs, documentación y páginas de presentación; para una aplicación con mucha interacción se queda corto.",
     "website": "https://astro.build",
     "docs": "https://docs.astro.build",
-    "repo": "https://github.com/withastro/astro",
     "tags": ["contenido", "islas", "estático", "seo"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea el proyecto con el asistente.",
+        "code": "npm create astro@latest"
+      },
+      {
+        "text": "Entra en la carpeta y arranca el servidor.",
+        "code": "cd mi-app && npm run dev"
+      },
+      {
+        "text": "Añade páginas como archivos dentro de src/pages."
+      }
+    ],
+    "useIf": [
+      "Haces un blog, una documentación o una landing.",
+      "Quieres la web más rápida posible sin esfuerzo.",
+      "Quieres mezclar componentes de React, Vue o Svelte."
+    ],
+    "avoidIf": [
+      "Tu web es una aplicación muy interactiva, tipo panel.",
+      "Necesitas mucho estado compartido en el navegador."
+    ],
+    "pairsWith": ["tailwindcss", "netlify", "github-pages"]
   },
   {
     "slug": "nodejs",
@@ -85,10 +220,32 @@
     "description": "Node.js no es un framework: es el motor sobre el que corren Express, NestJS y el propio Next.js. Da acceso a archivos, red y procesos desde JavaScript, y trae npm para instalar todo lo demás. Si ya sabes JavaScript del navegador, es el camino más corto para escribir también la parte del servidor.",
     "website": "https://nodejs.org",
     "docs": "https://nodejs.org/docs/latest/api/",
-    "repo": "https://github.com/nodejs/node",
     "tags": ["javascript", "runtime", "servidor", "npm"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Descarga la versión LTS desde nodejs.org e instálala."
+      },
+      {
+        "text": "Comprueba que funciona.",
+        "code": "node -v"
+      },
+      {
+        "text": "Ejecuta tu primer archivo de JavaScript.",
+        "code": "node index.js"
+      }
+    ],
+    "useIf": [
+      "Ya sabes JavaScript y quieres usarlo también en el servidor.",
+      "Vas a usar cualquier herramienta moderna de frontend.",
+      "Necesitas APIs, tiempo real o scripts."
+    ],
+    "avoidIf": [
+      "Tu proyecto es de cálculo pesado o ciencia de datos.",
+      "Tu equipo ya domina Python, PHP o Java."
+    ],
+    "pairsWith": ["mongodb-atlas", "railway", "react"]
   },
   {
     "slug": "express",
@@ -98,10 +255,33 @@
     "description": "Express es mínimo: defines rutas y respuestas, y todo lo demás lo añades tú con middlewares. Por eso es el primer backend que casi todo el mundo aprende en JavaScript, y el que más ejemplos tiene en internet.",
     "website": "https://expressjs.com",
     "docs": "https://expressjs.com/en/starter/installing.html",
-    "repo": "https://github.com/expressjs/express",
     "tags": ["nodejs", "api", "rest"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea el proyecto de Node.",
+        "code": "npm init -y"
+      },
+      {
+        "text": "Instala Express.",
+        "code": "npm install express"
+      },
+      {
+        "text": "Crea index.js con una ruta y ejecútalo.",
+        "code": "node index.js"
+      }
+    ],
+    "useIf": [
+      "Quieres tu primera API con muy poco código.",
+      "Prefieres decidir tú la estructura del proyecto.",
+      "Buscas algo con miles de ejemplos y tutoriales."
+    ],
+    "avoidIf": [
+      "El proyecto va a crecer mucho y quieres estructura impuesta.",
+      "Quieres validación y documentación automáticas."
+    ],
+    "pairsWith": ["mongodb-atlas", "render", "react"]
   },
   {
     "slug": "fastapi",
@@ -111,10 +291,32 @@
     "description": "FastAPI usa los tipos de Python para validar los datos que entran y generar sola la documentación interactiva de tu API. Es la mejor puerta de entrada al backend si ya sabes algo de Python, y la opción habitual para servicios de datos o IA.",
     "website": "https://fastapi.tiangolo.com",
     "docs": "https://fastapi.tiangolo.com/tutorial/",
-    "repo": "https://github.com/fastapi/fastapi",
     "tags": ["python", "api", "rest", "async"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Instala FastAPI con sus extras.",
+        "code": "pip install \"fastapi[standard]\""
+      },
+      {
+        "text": "Crea main.py con una ruta que devuelva un JSON."
+      },
+      {
+        "text": "Arranca el servidor de desarrollo.",
+        "code": "fastapi dev main.py"
+      }
+    ],
+    "useIf": [
+      "Sabes Python y quieres una API moderna y rápida.",
+      "Quieres documentación de la API generada sola.",
+      "Vas a servir modelos de IA o datos."
+    ],
+    "avoidIf": [
+      "Necesitas panel de administración y plantillas HTML.",
+      "No quieres trabajar con tipos en Python."
+    ],
+    "pairsWith": ["neon", "render", "react"]
   },
   {
     "slug": "django",
@@ -124,10 +326,33 @@
     "description": "Django trae resuelto casi todo lo que una web necesita: panel de administración generado solo, ORM para hablar con la base de datos, formularios y sistema de usuarios. Impone su manera de organizar el proyecto, y eso es justo lo que te ahorra tener que decidirlo todo. A cambio pesa más que Flask o FastAPI si lo único que quieres es una API pequeña.",
     "website": "https://www.djangoproject.com",
     "docs": "https://docs.djangoproject.com/en/stable/",
-    "repo": "https://github.com/django/django",
     "tags": ["python", "fullstack", "orm", "admin"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Instala Django.",
+        "code": "pip install django"
+      },
+      {
+        "text": "Crea el proyecto.",
+        "code": "django-admin startproject misitio"
+      },
+      {
+        "text": "Entra en la carpeta y arranca el servidor.",
+        "code": "cd misitio && python manage.py runserver"
+      }
+    ],
+    "useIf": [
+      "Quieres login, panel de administración y base de datos de serie.",
+      "Sabes Python y buscas algo completo y probado.",
+      "Tu web tiene mucho contenido o muchos usuarios."
+    ],
+    "avoidIf": [
+      "Solo necesitas una API pequeña.",
+      "Quieres libertad total sobre la estructura."
+    ],
+    "pairsWith": ["neon", "railway", "bootstrap"]
   },
   {
     "slug": "flask",
@@ -137,10 +362,32 @@
     "description": "Flask no impone estructura ni base de datos: te da rutas y plantillas, y el resto lo eliges tú con extensiones. Por eso es de lo mejor para entender cómo funciona un servidor por dentro, y suficiente para APIs pequeñas. En proyectos grandes esa libertad se paga, porque cada equipo acaba inventando su propia arquitectura.",
     "website": "https://flask.palletsprojects.com",
     "docs": "https://flask.palletsprojects.com/en/stable/",
-    "repo": "https://github.com/pallets/flask",
     "tags": ["python", "micro-framework", "api", "minimalista"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala Flask.",
+        "code": "pip install flask"
+      },
+      {
+        "text": "Crea app.py con una ruta."
+      },
+      {
+        "text": "Arranca el servidor en modo desarrollo.",
+        "code": "flask --app app run --debug"
+      }
+    ],
+    "useIf": [
+      "Quieres aprender backend con Python paso a paso.",
+      "Es una API o web pequeña.",
+      "Prefieres añadir solo lo que necesitas."
+    ],
+    "avoidIf": [
+      "Necesitas login y panel de administración ya hechos.",
+      "El proyecto va a ser grande y con varios equipos."
+    ],
+    "pairsWith": ["render", "bootstrap", "supabase"]
   },
   {
     "slug": "spring-boot",
@@ -150,10 +397,31 @@
     "description": "Spring Boot es la forma práctica de usar Java en el servidor: configura por ti la mayor parte del proyecto y te deja escribir la lógica. Es lo que vas a encontrar en bancos, aseguradoras y sistemas grandes que llevan años en producción.",
     "website": "https://spring.io/projects/spring-boot",
     "docs": "https://docs.spring.io/spring-boot/index.html",
-    "repo": "https://github.com/spring-projects/spring-boot",
     "tags": ["java", "api", "empresarial"],
     "pricing": "gratis",
-    "level": "avanzado"
+    "level": "avanzado",
+    "start": [
+      {
+        "text": "Genera el proyecto en start.spring.io."
+      },
+      {
+        "text": "Añade la dependencia Spring Web y descarga el zip."
+      },
+      {
+        "text": "Descomprímelo y arráncalo.",
+        "code": "./mvnw spring-boot:run"
+      }
+    ],
+    "useIf": [
+      "Sabes Java o Kotlin.",
+      "Trabajas en una empresa o banca con sistemas grandes.",
+      "Necesitas algo muy robusto y con soporte a largo plazo."
+    ],
+    "avoidIf": [
+      "Estás empezando en programación.",
+      "Quieres algo ligero para un proyecto personal."
+    ],
+    "pairsWith": ["angular", "neon", "railway"]
   },
   {
     "slug": "laravel",
@@ -163,10 +431,33 @@
     "description": "Laravel incluye de serie base de datos, login, correos, colas de tareas y panel de administración. Con PHP y un hosting barato puedes tener una web completa funcionando, lo que lo hace muy popular para proyectos de cliente.",
     "website": "https://laravel.com",
     "docs": "https://laravel.com/docs",
-    "repo": "https://github.com/laravel/laravel",
     "tags": ["php", "fullstack", "mvc"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Instala el instalador de Laravel.",
+        "code": "composer global require laravel/installer"
+      },
+      {
+        "text": "Crea el proyecto.",
+        "code": "laravel new mi-app"
+      },
+      {
+        "text": "Entra en la carpeta y arranca el entorno.",
+        "code": "cd mi-app && composer run dev"
+      }
+    ],
+    "useIf": [
+      "Sabes PHP o tu hosting usa PHP.",
+      "Quieres login, colas, correo y base de datos ya resueltos.",
+      "Buscas una comunidad enorme con muchos paquetes."
+    ],
+    "avoidIf": [
+      "Tu equipo solo sabe JavaScript.",
+      "Solo necesitas un par de rutas de API."
+    ],
+    "pairsWith": ["vue", "tailwindcss", "railway"]
   },
   {
     "slug": "nestjs",
@@ -176,10 +467,33 @@
     "description": "NestJS organiza el código en módulos, controladores y servicios, con TypeScript e inyección de dependencias. Cuesta más al empezar que Express, pero evita que un proyecto grande se convierta en un montón de archivos sueltos.",
     "website": "https://nestjs.com",
     "docs": "https://docs.nestjs.com",
-    "repo": "https://github.com/nestjs/nest",
     "tags": ["nodejs", "typescript", "api", "arquitectura"],
     "pricing": "gratis",
-    "level": "avanzado"
+    "level": "avanzado",
+    "start": [
+      {
+        "text": "Instala la CLI de Nest.",
+        "code": "npm install -g @nestjs/cli"
+      },
+      {
+        "text": "Crea el proyecto.",
+        "code": "nest new mi-api"
+      },
+      {
+        "text": "Entra en la carpeta y arranca en modo desarrollo.",
+        "code": "cd mi-api && npm run start:dev"
+      }
+    ],
+    "useIf": [
+      "Quieres una API en TypeScript con estructura clara.",
+      "El proyecto va a crecer y lo mantendrán varias personas.",
+      "Te gusta la forma de trabajar de Angular."
+    ],
+    "avoidIf": [
+      "Es una API pequeña o un prototipo.",
+      "Aún no te manejas con TypeScript."
+    ],
+    "pairsWith": ["neon", "railway", "angular"]
   },
   {
     "slug": "neon",
@@ -189,10 +503,32 @@
     "description": "Neon es Postgres alojado que se apaga cuando no lo usas y puede crear una rama de la base de datos por cada rama de código. Encaja muy bien con despliegues en Vercel y con entornos de prueba desechables.",
     "website": "https://neon.com",
     "docs": "https://neon.com/docs",
-    "repo": "https://github.com/neondatabase/neon",
     "tags": ["postgres", "serverless", "cloud"],
     "pricing": "freemium",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Crea una cuenta y un proyecto en neon.tech."
+      },
+      {
+        "text": "Copia la cadena de conexión en tu archivo .env.",
+        "code": "DATABASE_URL=postgresql://…"
+      },
+      {
+        "text": "Instala el driver para conectarte desde tu código.",
+        "code": "npm install @neondatabase/serverless"
+      }
+    ],
+    "useIf": [
+      "Quieres PostgreSQL sin administrar un servidor.",
+      "Despliegas en Vercel o en funciones serverless.",
+      "Te vienen bien ramas de la base de datos para probar cambios."
+    ],
+    "avoidIf": [
+      "Quieres login y almacenamiento incluidos en el mismo servicio.",
+      "Prefieres una base de datos de documentos, sin tablas."
+    ],
+    "pairsWith": ["nextjs", "vercel", "fastapi"]
   },
   {
     "slug": "supabase",
@@ -202,10 +538,31 @@
     "description": "Supabase te da una base de datos Postgres más autenticación, almacenamiento de archivos y una API generada automáticamente. Es la vía más rápida para tener backend sin escribir backend, y puedes migrar los datos porque por debajo es Postgres estándar.",
     "website": "https://supabase.com",
     "docs": "https://supabase.com/docs",
-    "repo": "https://github.com/supabase/supabase",
     "tags": ["postgres", "auth", "baas", "storage"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea un proyecto en supabase.com."
+      },
+      {
+        "text": "Instala el cliente.",
+        "code": "npm install @supabase/supabase-js"
+      },
+      {
+        "text": "Copia la URL y la clave pública del proyecto en tu .env."
+      }
+    ],
+    "useIf": [
+      "Quieres base de datos, login y archivos sin escribir backend.",
+      "Prefieres PostgreSQL estándar para no quedarte atado.",
+      "Necesitas datos en tiempo real."
+    ],
+    "avoidIf": [
+      "Ya tienes backend propio y solo buscas una base de datos.",
+      "Necesitas control total del servidor."
+    ],
+    "pairsWith": ["nextjs", "react", "vercel"]
   },
   {
     "slug": "firebase",
@@ -215,10 +572,31 @@
     "description": "Firebase te da base de datos, autenticación, archivos y hosting sin montar ni un servidor. Firestore sincroniza los cambios en vivo entre dispositivos, que es justo lo que piden un chat o una aplicación colaborativa. Es NoSQL y muy de Google: salir de Firebase más adelante cuesta, porque fuera no hay un equivalente al que mudarse.",
     "website": "https://firebase.google.com",
     "docs": "https://firebase.google.com/docs",
-    "repo": "https://github.com/firebase/firebase-js-sdk",
     "tags": ["nosql", "tiempo-real", "auth", "baas"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea un proyecto en la consola de Firebase."
+      },
+      {
+        "text": "Instala el SDK.",
+        "code": "npm install firebase"
+      },
+      {
+        "text": "Registra tu app web y copia su objeto de configuración."
+      }
+    ],
+    "useIf": [
+      "Quieres login, base de datos y hosting en un solo sitio.",
+      "Haces una app móvil o en tiempo real.",
+      "Buscas empezar gratis y sin backend."
+    ],
+    "avoidIf": [
+      "Tus datos tienen muchas relaciones y consultas complejas.",
+      "Te preocupa depender de un solo proveedor."
+    ],
+    "pairsWith": ["react", "vue", "angular"]
   },
   {
     "slug": "mongodb-atlas",
@@ -230,7 +608,29 @@
     "docs": "https://www.mongodb.com/docs/atlas/",
     "tags": ["nosql", "documentos", "cloud"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea un clúster gratuito en MongoDB Atlas."
+      },
+      {
+        "text": "Permite tu IP y crea un usuario de base de datos."
+      },
+      {
+        "text": "Instala el driver en tu proyecto.",
+        "code": "npm install mongodb"
+      }
+    ],
+    "useIf": [
+      "Tus datos cambian de forma a menudo.",
+      "Trabajas con Node.js y JSON de principio a fin.",
+      "Quieres empezar sin diseñar tablas."
+    ],
+    "avoidIf": [
+      "Tus datos son muy relacionales: pedidos, facturas, inventario.",
+      "Necesitas transacciones complejas entre muchas tablas."
+    ],
+    "pairsWith": ["express", "nodejs", "render"]
   },
   {
     "slug": "vercel",
@@ -242,7 +642,30 @@
     "docs": "https://vercel.com/docs",
     "tags": ["nextjs", "serverless", "sin-configuración"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala la CLI de Vercel.",
+        "code": "npm install -g vercel"
+      },
+      {
+        "text": "Despliega desde la carpeta del proyecto.",
+        "code": "vercel"
+      },
+      {
+        "text": "O conecta tu repo de GitHub y cada push se publica solo."
+      }
+    ],
+    "useIf": [
+      "Usas Next.js, Astro, SvelteKit o cualquier framework frontend.",
+      "Quieres una vista previa por cada cambio.",
+      "Buscas publicar gratis un proyecto personal."
+    ],
+    "avoidIf": [
+      "Necesitas un servidor encendido siempre con estado propio.",
+      "Tu proyecto es comercial y no quieres pagar plan Pro."
+    ],
+    "pairsWith": ["nextjs", "neon", "astro"]
   },
   {
     "slug": "netlify",
@@ -254,7 +677,31 @@
     "docs": "https://docs.netlify.com",
     "tags": ["estático", "serverless", "formularios"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala la CLI de Netlify.",
+        "code": "npm install -g netlify-cli"
+      },
+      {
+        "text": "Publica una vista previa.",
+        "code": "netlify deploy"
+      },
+      {
+        "text": "Cuando esté bien, publícalo en producción.",
+        "code": "netlify deploy --prod"
+      }
+    ],
+    "useIf": [
+      "Tu web es estática o usa Astro, Vue o React.",
+      "Quieres formularios y redirecciones sin backend.",
+      "Buscas publicar gratis desde GitHub."
+    ],
+    "avoidIf": [
+      "Necesitas un backend pesado o procesos largos.",
+      "Tu framework principal es Next.js con funciones avanzadas."
+    ],
+    "pairsWith": ["astro", "vue", "svelte"]
   },
   {
     "slug": "github-pages",
@@ -266,7 +713,28 @@
     "docs": "https://docs.github.com/pages",
     "tags": ["estático", "documentación", "landing"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Sube tu web a un repositorio de GitHub."
+      },
+      {
+        "text": "Ve a Settings → Pages y elige la rama a publicar."
+      },
+      {
+        "text": "Tu web queda en usuario.github.io/repositorio."
+      }
+    ],
+    "useIf": [
+      "Es un portfolio, una documentación o una web estática.",
+      "Quieres publicar gratis sin salir de GitHub.",
+      "No necesitas servidor ni base de datos."
+    ],
+    "avoidIf": [
+      "Tu web necesita backend o variables secretas.",
+      "Es un proyecto comercial con mucho tráfico."
+    ],
+    "pairsWith": ["astro", "react", "tailwindcss"]
   },
   {
     "slug": "railway",
@@ -278,7 +746,28 @@
     "docs": "https://docs.railway.com",
     "tags": ["api", "postgres", "cloud"],
     "pricing": "pago",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Crea una cuenta en railway.com."
+      },
+      {
+        "text": "Crea un proyecto desde tu repo de GitHub."
+      },
+      {
+        "text": "Añade una base de datos y enlázala con variables de entorno."
+      }
+    ],
+    "useIf": [
+      "Quieres API y base de datos en el mismo panel.",
+      "Tu backend necesita estar siempre encendido.",
+      "Buscas algo más simple que un servidor propio."
+    ],
+    "avoidIf": [
+      "Solo publicas una web estática.",
+      "Necesitas un plan totalmente gratuito."
+    ],
+    "pairsWith": ["nestjs", "django", "laravel"]
   },
   {
     "slug": "render",
@@ -290,7 +779,28 @@
     "docs": "https://render.com/docs",
     "tags": ["api", "postgres", "docker", "sin-configuración"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Crea una cuenta en render.com."
+      },
+      {
+        "text": "Elige New → Web Service y conecta tu repositorio."
+      },
+      {
+        "text": "Indica el comando de build y el de arranque."
+      }
+    ],
+    "useIf": [
+      "Tienes una API en Node, Python o Go.",
+      "Quieres empezar gratis con backend y base de datos.",
+      "Prefieres un panel sencillo a configurar servidores."
+    ],
+    "avoidIf": [
+      "No aceptas que el plan gratis se duerma sin tráfico.",
+      "Necesitas escalar mucho desde el primer día."
+    ],
+    "pairsWith": ["express", "fastapi", "flask"]
   },
   {
     "slug": "heroku",
@@ -302,7 +812,31 @@
     "docs": "https://devcenter.heroku.com",
     "tags": ["git-push", "complementos", "paas"],
     "pricing": "pago",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala la CLI de Heroku e inicia sesión.",
+        "code": "heroku login"
+      },
+      {
+        "text": "Crea la app desde la carpeta de tu proyecto.",
+        "code": "heroku create"
+      },
+      {
+        "text": "Despliega con un push.",
+        "code": "git push heroku main"
+      }
+    ],
+    "useIf": [
+      "Quieres el flujo clásico de desplegar con git push.",
+      "Tu empresa ya lo usa.",
+      "Necesitas add-ons de base de datos y colas listos."
+    ],
+    "avoidIf": [
+      "Buscas un plan gratuito.",
+      "Es tu primer proyecto y el presupuesto es cero."
+    ],
+    "pairsWith": ["nodejs", "django", "flask"]
   },
   {
     "slug": "cloudflare-workers",
@@ -314,7 +848,31 @@
     "docs": "https://developers.cloudflare.com/workers/",
     "tags": ["edge", "serverless", "cdn", "global"],
     "pricing": "freemium",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Crea el proyecto con el asistente de Cloudflare.",
+        "code": "npm create cloudflare@latest"
+      },
+      {
+        "text": "Pruébalo en local.",
+        "code": "npm run dev"
+      },
+      {
+        "text": "Publícalo en la red de Cloudflare.",
+        "code": "npm run deploy"
+      }
+    ],
+    "useIf": [
+      "Quieres respuestas rapidísimas en todo el mundo.",
+      "Tu backend son funciones pequeñas o una API ligera.",
+      "Buscas un plan gratis muy generoso."
+    ],
+    "avoidIf": [
+      "Tu código usa muchas librerías solo de Node.js.",
+      "Necesitas procesos largos o un servidor tradicional."
+    ],
+    "pairsWith": ["astro", "react", "neon"]
   },
   {
     "slug": "shadcn-ui",
@@ -324,10 +882,32 @@
     "description": "shadcn/ui no se instala como librería: un comando copia el código del componente dentro de tu carpeta, así que puedes modificarlo sin pelearte con la librería. Usa Tailwind y es hoy la opción por defecto en proyectos con React.",
     "website": "https://ui.shadcn.com",
     "docs": "https://ui.shadcn.com/docs",
-    "repo": "https://github.com/shadcn-ui/ui",
     "tags": ["react", "tailwind", "accesible", "personalizable"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Parte de un proyecto con React y Tailwind, por ejemplo Next.js."
+      },
+      {
+        "text": "Inicializa shadcn/ui.",
+        "code": "npx shadcn@latest init"
+      },
+      {
+        "text": "Añade los componentes que necesites.",
+        "code": "npx shadcn@latest add button"
+      }
+    ],
+    "useIf": [
+      "Quieres que el código de los componentes sea tuyo.",
+      "Usas React con Tailwind CSS.",
+      "Buscas una base limpia para crear tu propio estilo."
+    ],
+    "avoidIf": [
+      "No usas Tailwind y no quieres usarlo.",
+      "Prefieres actualizar componentes con un simple npm update."
+    ],
+    "pairsWith": ["nextjs", "tailwindcss", "lucide"]
   },
   {
     "slug": "heroui",
@@ -337,10 +917,28 @@
     "description": "HeroUI (antes NextUI) trae componentes ya diseñados con animaciones y modo oscuro incluido. Se instala como librería normal, así que llegas antes al resultado, a cambio de personalizar menos que con shadcn/ui.",
     "website": "https://heroui.com",
     "docs": "https://heroui.com/docs/guide/introduction",
-    "repo": "https://github.com/heroui-inc/heroui",
     "tags": ["react", "tailwind", "modo-oscuro"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala la librería.",
+        "code": "npm install @heroui/react"
+      },
+      {
+        "text": "Sigue en su documentación los pasos para tu framework."
+      },
+      {
+        "text": "Importa los componentes y úsalos en tus páginas."
+      }
+    ],
+    "useIf": [
+      "Quieres componentes bonitos y animados sin diseñar nada.",
+      "Usas React con Tailwind.",
+      "Necesitas modo oscuro de serie."
+    ],
+    "avoidIf": ["Quieres modificar a fondo cada componente.", "No usas React."],
+    "pairsWith": ["nextjs", "tailwindcss", "motion"]
   },
   {
     "slug": "material-ui",
@@ -350,10 +948,32 @@
     "description": "Material UI es una de las librerías más veteranas y completas de React: cubre desde botones hasta formularios y navegación, con licencia MIT. Si te sirve el estilo de Google avanzas muy rápido; personalizar el tema a fondo cuesta más que en otras opciones. El mismo equipo vende aparte MUI X (tablas de datos, selectores de fecha y gráficas avanzadas), que sí es de pago.",
     "website": "https://mui.com",
     "docs": "https://mui.com/material-ui/getting-started/",
-    "repo": "https://github.com/mui/material-ui",
     "tags": ["react", "material-design", "completo"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala Material UI y sus dependencias.",
+        "code": "npm install @mui/material @emotion/react @emotion/styled"
+      },
+      {
+        "text": "Importa un componente.",
+        "code": "import Button from \"@mui/material/Button\""
+      },
+      {
+        "text": "Ajusta colores y tipografía con un tema propio."
+      }
+    ],
+    "useIf": [
+      "Te gusta el diseño Material de Google.",
+      "Haces paneles o aplicaciones internas.",
+      "Necesitas un catálogo enorme de componentes."
+    ],
+    "avoidIf": [
+      "Quieres que tu web no se parezca a Google.",
+      "Usas Tailwind para todo el estilo."
+    ],
+    "pairsWith": ["react", "angular", "firebase"]
   },
   {
     "slug": "mantine",
@@ -363,10 +983,32 @@
     "description": "Mantine incluye componentes poco habituales ya resueltos (selectores de fecha, notificaciones, dropzone) y una colección de hooks muy práctica. Buena elección para paneles de administración y herramientas internas.",
     "website": "https://mantine.dev",
     "docs": "https://mantine.dev/getting-started/",
-    "repo": "https://github.com/mantinedev/mantine",
     "tags": ["react", "hooks", "dashboard"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Instala los paquetes principales.",
+        "code": "npm install @mantine/core @mantine/hooks"
+      },
+      {
+        "text": "Importa los estilos.",
+        "code": "import \"@mantine/core/styles.css\""
+      },
+      {
+        "text": "Envuelve tu app con MantineProvider."
+      }
+    ],
+    "useIf": [
+      "Haces paneles o aplicaciones con muchos formularios.",
+      "Quieres componentes y hooks útiles en un solo paquete.",
+      "Prefieres no depender de Tailwind."
+    ],
+    "avoidIf": [
+      "Tu proyecto ya usa Tailwind para todo.",
+      "Buscas un aspecto muy personalizado desde cero."
+    ],
+    "pairsWith": ["react", "nextjs", "supabase"]
   },
   {
     "slug": "chakra-ui",
@@ -376,10 +1018,32 @@
     "description": "Chakra UI da mucha importancia a la accesibilidad y permite aplicar estilos con props directamente en el componente. Es agradable de escribir y fácil de aprender si no quieres separar el CSS del componente.",
     "website": "https://chakra-ui.com",
     "docs": "https://chakra-ui.com/docs/get-started",
-    "repo": "https://github.com/chakra-ui/chakra-ui",
     "tags": ["react", "accesible", "temas"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala Chakra UI.",
+        "code": "npm install @chakra-ui/react @emotion/react"
+      },
+      {
+        "text": "Añade los snippets de configuración.",
+        "code": "npx @chakra-ui/cli snippet add"
+      },
+      {
+        "text": "Envuelve tu app con el Provider que generan los snippets."
+      }
+    ],
+    "useIf": [
+      "Quieres componentes accesibles con una API sencilla.",
+      "Te gusta dar estilo con props.",
+      "Necesitas temas claro y oscuro fáciles."
+    ],
+    "avoidIf": [
+      "Usas Tailwind para todo el estilo.",
+      "Te importa mucho el peso final de la web."
+    ],
+    "pairsWith": ["react", "nextjs", "firebase"]
   },
   {
     "slug": "magicui",
@@ -389,10 +1053,30 @@
     "description": "Magic UI es una colección de efectos y componentes animados —contadores, textos que se revelan, fondos con movimiento— hechos con React, Tailwind y Motion. Se copian y pegan igual que shadcn/ui, con el que está diseñado para convivir. Los componentes son MIT; lo que se paga es Magic UI Pro, que son plantillas de página enteras. Brilla en páginas de presentación; para los formularios y las tablas de una aplicación se queda corto.",
     "website": "https://magicui.design",
     "docs": "https://magicui.design/docs",
-    "repo": "https://github.com/magicuidesign/magicui",
     "tags": ["react", "tailwind", "animación", "landing"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Configura shadcn/ui en tu proyecto."
+      },
+      {
+        "text": "Elige un componente en magicui.design."
+      },
+      {
+        "text": "Copia su comando de instalación y ejecútalo en tu proyecto."
+      }
+    ],
+    "useIf": [
+      "Haces una landing y quieres efectos llamativos.",
+      "Ya usas shadcn/ui y Tailwind.",
+      "Quieres animaciones sin programarlas desde cero."
+    ],
+    "avoidIf": [
+      "Tu web es una aplicación sobria o un panel.",
+      "No usas React ni Tailwind."
+    ],
+    "pairsWith": ["tailwindcss", "motion", "nextjs"]
   },
   {
     "slug": "aceternity-ui",
@@ -404,7 +1088,29 @@
     "docs": "https://ui.aceternity.com/components",
     "tags": ["react", "tailwind", "animación", "landing"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Prepara un proyecto con React y Tailwind."
+      },
+      {
+        "text": "Instala las dependencias que usan sus componentes.",
+        "code": "npm install motion clsx tailwind-merge"
+      },
+      {
+        "text": "Copia el componente que quieras desde su web."
+      }
+    ],
+    "useIf": [
+      "Quieres secciones de alto impacto para una landing.",
+      "Te gustan los efectos 3D, de brillo y de scroll.",
+      "Ya usas Tailwind."
+    ],
+    "avoidIf": [
+      "Buscas componentes básicos de formulario.",
+      "Te preocupa el rendimiento en móviles antiguos."
+    ],
+    "pairsWith": ["nextjs", "tailwindcss", "motion"]
   },
   {
     "slug": "coss-ui",
@@ -416,7 +1122,28 @@
     "docs": "https://coss.com/ui/docs",
     "tags": ["react", "tailwind", "base-ui", "formularios"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Configura shadcn/ui en tu proyecto."
+      },
+      {
+        "text": "Busca el componente en coss.com/ui."
+      },
+      {
+        "text": "Copia su comando de instalación y ejecútalo."
+      }
+    ],
+    "useIf": [
+      "Quieres muchos componentes listos para copiar.",
+      "Usas React, Tailwind y Base UI.",
+      "Necesitas variantes que shadcn/ui no trae."
+    ],
+    "avoidIf": [
+      "No usas Tailwind.",
+      "Prefieres una librería que se actualice con npm."
+    ],
+    "pairsWith": ["tailwindcss", "nextjs", "lucide"]
   },
   {
     "slug": "react-bits",
@@ -426,10 +1153,27 @@
     "description": "React Bits reúne animaciones listas para usar —texto que se descompone, fondos interactivos, entradas con movimiento— con muy pocas dependencias detrás. Cada componente viene en cuatro variantes: JavaScript o TypeScript, y con CSS o con Tailwind. Sirve para dar personalidad a una web, no para levantar el esqueleto de una aplicación.",
     "website": "https://www.reactbits.dev",
     "docs": "https://github.com/DavidHDev/react-bits#readme",
-    "repo": "https://github.com/DavidHDev/react-bits",
     "tags": ["react", "animación", "texto", "fondos"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Elige un componente en reactbits.dev."
+      },
+      {
+        "text": "Escoge la variante: JavaScript o TypeScript, CSS o Tailwind."
+      },
+      {
+        "text": "Cópialo o instálalo con el comando que aparece en su ficha."
+      }
+    ],
+    "useIf": [
+      "Quieres textos, fondos y efectos animados con carácter.",
+      "Haces un portfolio o una landing creativa.",
+      "Ya trabajas con React."
+    ],
+    "avoidIf": ["Tu web es una aplicación seria o un panel.", "No usas React."],
+    "pairsWith": ["react", "tailwindcss", "motion"]
   },
   {
     "slug": "tailwindcss",
@@ -439,10 +1183,32 @@
     "description": "Con Tailwind escribes el estilo directamente en el marcado con clases como flex, p-4 o text-sm. Se te acaban los nombres de clase inventados y el CSS muerto, y el resultado final solo incluye las clases que de verdad usas.",
     "website": "https://tailwindcss.com",
     "docs": "https://tailwindcss.com/docs",
-    "repo": "https://github.com/tailwindlabs/tailwindcss",
     "tags": ["utility-first", "css", "responsive"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instálalo en un proyecto con Vite.",
+        "code": "npm install tailwindcss @tailwindcss/vite"
+      },
+      {
+        "text": "Añade el plugin tailwindcss() en vite.config."
+      },
+      {
+        "text": "Importa Tailwind en tu CSS principal.",
+        "code": "@import \"tailwindcss\";"
+      }
+    ],
+    "useIf": [
+      "Quieres dar estilo sin salir del HTML.",
+      "Usas React, Vue, Svelte o Astro.",
+      "Vas a usar librerías como shadcn/ui."
+    ],
+    "avoidIf": [
+      "Te molesta ver muchas clases en el HTML.",
+      "Tu equipo prefiere CSS clásico por archivos."
+    ],
+    "pairsWith": ["shadcn-ui", "nextjs", "lucide"]
   },
   {
     "slug": "bootstrap",
@@ -452,10 +1218,32 @@
     "description": "Bootstrap lleva años siendo la forma más rápida de que una web se vea decente sin saber diseño: rejilla responsive, botones, formularios y navegación ya hechos. El precio es que muchas webs terminan pareciéndose entre sí.",
     "website": "https://getbootstrap.com",
     "docs": "https://getbootstrap.com/docs/",
-    "repo": "https://github.com/twbs/bootstrap",
     "tags": ["css", "grid", "responsive", "clásico"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala Bootstrap.",
+        "code": "npm install bootstrap"
+      },
+      {
+        "text": "Importa sus estilos.",
+        "code": "import \"bootstrap/dist/css/bootstrap.min.css\""
+      },
+      {
+        "text": "O pega el enlace de su CDN en tu HTML y listo."
+      }
+    ],
+    "useIf": [
+      "Quieres una web ordenada rápido sin saber diseño.",
+      "Trabajas con HTML clásico, PHP o Django.",
+      "Necesitas una rejilla responsive que funcione ya."
+    ],
+    "avoidIf": [
+      "No quieres que tu web se parezca a mil otras.",
+      "Usas Tailwind."
+    ],
+    "pairsWith": ["django", "laravel", "heroicons"]
   },
   {
     "slug": "sass",
@@ -465,10 +1253,31 @@
     "description": "Sass amplía el CSS con variables, funciones y la posibilidad de anidar reglas, y luego lo compila a CSS normal. Sigue siendo muy común en proyectos que prefieren mantener los estilos en sus propios archivos.",
     "website": "https://sass-lang.com",
     "docs": "https://sass-lang.com/documentation/",
-    "repo": "https://github.com/sass/dart-sass",
     "tags": ["css", "preprocesador", "scss"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala Sass en tu proyecto.",
+        "code": "npm install -D sass"
+      },
+      {
+        "text": "Renombra tus archivos .css a .scss."
+      },
+      {
+        "text": "Vite y Next.js lo compilan solos al guardar."
+      }
+    ],
+    "useIf": [
+      "Prefieres CSS clásico, pero con variables, anidación y mixins.",
+      "Mantienes un proyecto con mucho CSS propio.",
+      "Usas Bootstrap y quieres personalizarlo."
+    ],
+    "avoidIf": [
+      "Ya usas Tailwind.",
+      "Te basta con las variables y la anidación del CSS moderno."
+    ],
+    "pairsWith": ["vue", "angular", "heroicons"]
   },
   {
     "slug": "styled-components",
@@ -478,10 +1287,32 @@
     "description": "styled-components crea componentes con su CSS incorporado, que puede cambiar según las props. Es cómodo para temas dinámicos, aunque el estilo se calcula en tiempo de ejecución y hoy se prefieren soluciones que compilan antes.",
     "website": "https://styled-components.com",
     "docs": "https://styled-components.com/docs",
-    "repo": "https://github.com/styled-components/styled-components",
     "tags": ["react", "css-in-js", "temas"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Instala la librería.",
+        "code": "npm install styled-components"
+      },
+      {
+        "text": "Crea un componente con estilo.",
+        "code": "const Boton = styled.button`color: red;`"
+      },
+      {
+        "text": "Úsalo como cualquier otro componente de React."
+      }
+    ],
+    "useIf": [
+      "Quieres el CSS dentro de cada componente de React.",
+      "Mantienes un proyecto que ya lo usa.",
+      "Necesitas estilos que cambien según props."
+    ],
+    "avoidIf": [
+      "Empiezas un proyecto nuevo con Server Components.",
+      "Te importa el rendimiento al cargar la página."
+    ],
+    "pairsWith": ["react", "motion", "lucide"]
   },
   {
     "slug": "motion",
@@ -491,10 +1322,33 @@
     "description": "Motion anima componentes con una sintaxis muy corta: cambias unas props y él calcula la transición. Incluye animaciones de entrada y salida, gestos y scroll. Es la opción por defecto si tu proyecto ya usa React. La librería es MIT y completa; aparte se vende Motion+, un pago único con componentes premium y herramientas de autor.",
     "website": "https://motion.dev",
     "docs": "https://motion.dev/docs",
-    "repo": "https://github.com/motiondivision/motion",
     "tags": ["react", "transiciones", "gestos"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Instala Motion.",
+        "code": "npm install motion"
+      },
+      {
+        "text": "Importa el componente animable.",
+        "code": "import { motion } from \"motion/react\""
+      },
+      {
+        "text": "Anima cualquier elemento con props.",
+        "code": "<motion.div animate={{ x: 100 }} />"
+      }
+    ],
+    "useIf": [
+      "Usas React y quieres animaciones fluidas.",
+      "Necesitas animar entradas, salidas y gestos.",
+      "Prefieres animar con props en lugar de con código."
+    ],
+    "avoidIf": [
+      "Buscas animaciones complejas con líneas de tiempo largas.",
+      "Solo necesitas un par de transiciones de CSS."
+    ],
+    "pairsWith": ["react", "nextjs", "tailwindcss"]
   },
   {
     "slug": "gsap",
@@ -504,10 +1358,33 @@
     "description": "GSAP encadena animaciones en líneas de tiempo con un control muy fino del ritmo. Es lo que hay detrás de buena parte de las webs premiadas, y no depende de React ni de ningún framework. Desde la versión 3.13, en mayo de 2025, Webflow lo liberó entero: los plugins que antes pedían la suscripción Club GreenSock —SplitText, MorphSVG, ScrollSmoother— son ahora gratuitos, también para uso comercial.",
     "website": "https://gsap.com",
     "docs": "https://gsap.com/docs/v3/",
-    "repo": "https://github.com/greensock/GSAP",
     "tags": ["timeline", "scroll", "javascript"],
     "pricing": "gratis",
-    "level": "avanzado"
+    "level": "avanzado",
+    "start": [
+      {
+        "text": "Instala GSAP.",
+        "code": "npm install gsap"
+      },
+      {
+        "text": "Impórtalo en tu código.",
+        "code": "import { gsap } from \"gsap\""
+      },
+      {
+        "text": "Anima un elemento.",
+        "code": "gsap.to(\".caja\", { x: 200 })"
+      }
+    ],
+    "useIf": [
+      "Quieres animaciones de nivel profesional.",
+      "Necesitas líneas de tiempo y efectos de scroll.",
+      "Tu web no usa framework o usas cualquiera."
+    ],
+    "avoidIf": [
+      "Solo necesitas pequeñas transiciones.",
+      "Prefieres animar con componentes de React."
+    ],
+    "pairsWith": ["astro", "nextjs", "awwwards"]
   },
   {
     "slug": "lenis",
@@ -517,10 +1394,33 @@
     "description": "Lenis sustituye el scroll brusco del navegador por uno con inercia, y se combina con GSAP para animaciones ligadas al desplazamiento. Úsalo con cuidado: mal ajustado, molesta más que luce.",
     "website": "https://lenis.darkroom.engineering",
     "docs": "https://github.com/darkroomengineering/lenis#readme",
-    "repo": "https://github.com/darkroomengineering/lenis",
     "tags": ["scroll", "inercia", "javascript"],
     "pricing": "gratis",
-    "level": "intermedio"
+    "level": "intermedio",
+    "start": [
+      {
+        "text": "Instala Lenis.",
+        "code": "npm install lenis"
+      },
+      {
+        "text": "Impórtalo en tu código.",
+        "code": "import Lenis from \"lenis\""
+      },
+      {
+        "text": "Actívalo al cargar la página.",
+        "code": "new Lenis({ autoRaf: true })"
+      }
+    ],
+    "useIf": [
+      "Quieres un scroll suave como el de las webs premiadas.",
+      "Combinas scroll con animaciones de GSAP.",
+      "Haces una landing o un portfolio."
+    ],
+    "avoidIf": [
+      "Tu web es una aplicación con mucho texto o formularios.",
+      "Te preocupa cambiar cómo se siente el scroll nativo."
+    ],
+    "pairsWith": ["astro", "nextjs", "awwwards"]
   },
   {
     "slug": "animejs",
@@ -530,10 +1430,33 @@
     "description": "Anime.js anima propiedades CSS, SVG, atributos del DOM y objetos de JavaScript con una API tan pequeña que se aprende en una tarde. La versión 4 llegó reescrita, más modular y con mejor soporte de TypeScript. Pesa bastante menos que GSAP y cubre la mayoría de efectos; para secuencias largas y encadenadas, GSAP sigue siendo más cómodo.",
     "website": "https://animejs.com",
     "docs": "https://animejs.com/documentation",
-    "repo": "https://github.com/juliangarnier/anime",
     "tags": ["javascript", "svg", "ligero", "timeline"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala Anime.js.",
+        "code": "npm install animejs"
+      },
+      {
+        "text": "Importa la función de animar.",
+        "code": "import { animate } from \"animejs\""
+      },
+      {
+        "text": "Anima un elemento.",
+        "code": "animate(\".caja\", { x: 200 })"
+      }
+    ],
+    "useIf": [
+      "Quieres una librería de animación ligera y sencilla.",
+      "Animas SVG, CSS o elementos del DOM.",
+      "No usas framework o no quieres depender de uno."
+    ],
+    "avoidIf": [
+      "Necesitas efectos de scroll avanzados.",
+      "Prefieres animar con componentes de React."
+    ],
+    "pairsWith": ["astro", "svelte", "lucide"]
   },
   {
     "slug": "threejs",
@@ -543,10 +1466,32 @@
     "description": "Three.js pone WebGL al alcance de la mano: cámaras, luces, materiales y modelos 3D sin escribir shaders desde cero. Es lo que hay detrás de prácticamente cualquier web con una escena tridimensional. Tiene la curva más dura de esta categoría, porque antes que la librería toca entender los conceptos del 3D.",
     "website": "https://threejs.org",
     "docs": "https://threejs.org/docs/",
-    "repo": "https://github.com/mrdoob/three.js",
     "tags": ["3d", "webgl", "escenas", "javascript"],
     "pricing": "gratis",
-    "level": "avanzado"
+    "level": "avanzado",
+    "start": [
+      {
+        "text": "Instala Three.js.",
+        "code": "npm install three"
+      },
+      {
+        "text": "Impórtalo en tu código.",
+        "code": "import * as THREE from \"three\""
+      },
+      {
+        "text": "Crea una escena, una cámara y un renderer, y añade un objeto."
+      }
+    ],
+    "useIf": [
+      "Quieres 3D en el navegador: productos, fondos, juegos.",
+      "Buscas una web que impresione.",
+      "Estás dispuesto a aprender algo de geometría."
+    ],
+    "avoidIf": [
+      "Estás empezando en JavaScript.",
+      "Tu público usa móviles poco potentes."
+    ],
+    "pairsWith": ["react", "vercel", "awwwards"]
   },
   {
     "slug": "lucide",
@@ -556,10 +1501,33 @@
     "description": "Lucide es la continuación abierta de Feather Icons, con muchos más iconos y paquetes oficiales para React, Vue y Svelte. Al ser SVG, controlas tamaño, grosor y color desde CSS. Es el set que usa shadcn/ui por defecto.",
     "website": "https://lucide.dev",
     "docs": "https://lucide.dev/guide/",
-    "repo": "https://github.com/lucide-icons/lucide",
     "tags": ["svg", "línea", "react", "open-source"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala la versión para React.",
+        "code": "npm install lucide-react"
+      },
+      {
+        "text": "Importa el icono que necesites.",
+        "code": "import { Camera } from \"lucide-react\""
+      },
+      {
+        "text": "Úsalo como un componente.",
+        "code": "<Camera size={24} />"
+      }
+    ],
+    "useIf": [
+      "Quieres iconos limpios y consistentes para una interfaz.",
+      "Usas shadcn/ui, que ya los usa.",
+      "Necesitas miles de iconos gratis."
+    ],
+    "avoidIf": [
+      "Buscas logos de marcas.",
+      "Quieres iconos rellenos o con color."
+    ],
+    "pairsWith": ["shadcn-ui", "react", "tailwindcss"]
   },
   {
     "slug": "heroicons",
@@ -569,10 +1537,30 @@
     "description": "Heroicons es un set pequeño y muy cuidado, pensado para acompañar a Tailwind CSS. Cada icono viene en varios tamaños y estilos, listos para copiar como SVG o importar como componente de React.",
     "website": "https://heroicons.com",
     "docs": "https://github.com/tailwindlabs/heroicons#readme",
-    "repo": "https://github.com/tailwindlabs/heroicons",
     "tags": ["svg", "tailwind", "react"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala la versión para React.",
+        "code": "npm install @heroicons/react"
+      },
+      {
+        "text": "Importa el icono y su estilo.",
+        "code": "import { BeakerIcon } from \"@heroicons/react/24/solid\""
+      },
+      {
+        "text": "Úsalo como un componente.",
+        "code": "<BeakerIcon className=\"size-6\" />"
+      }
+    ],
+    "useIf": [
+      "Usas Tailwind y quieres iconos de sus mismos creadores.",
+      "Te basta con un set pequeño y cuidado.",
+      "Quieres versiones de contorno y rellenas."
+    ],
+    "avoidIf": ["Necesitas un catálogo muy grande.", "Buscas logos de marcas."],
+    "pairsWith": ["tailwindcss", "react", "vue"]
   },
   {
     "slug": "simple-icons",
@@ -582,10 +1570,32 @@
     "description": "Simple Icons reúne miles de logos de empresas y herramientas junto a su color de marca. Es lo que necesitas para pintar los logos de un stack, un pie de página o una sección de integraciones.",
     "website": "https://simpleicons.org",
     "docs": "https://github.com/simple-icons/simple-icons#readme",
-    "repo": "https://github.com/simple-icons/simple-icons",
     "tags": ["logos", "marcas", "svg"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Instala el paquete.",
+        "code": "npm install simple-icons"
+      },
+      {
+        "text": "Importa el logo de la marca.",
+        "code": "import { siReact } from \"simple-icons\""
+      },
+      {
+        "text": "Usa siReact.svg o siReact.path con su color siReact.hex."
+      }
+    ],
+    "useIf": [
+      "Necesitas logos de marcas y tecnologías.",
+      "Quieres el color oficial de cada marca.",
+      "Haces un portfolio con tu stack."
+    ],
+    "avoidIf": [
+      "Buscas iconos de interfaz como flechas o menús.",
+      "Necesitas logos a color con degradados."
+    ],
+    "pairsWith": ["react", "astro", "shadcn-ui"]
   },
   {
     "slug": "animated-icons",
@@ -596,7 +1606,28 @@
     "website": "https://animatedicons.co",
     "tags": ["lottie", "animación", "svg", "gif"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Busca el icono en su web."
+      },
+      {
+        "text": "Descárgalo en el formato que necesites."
+      },
+      {
+        "text": "Para Lottie, reprodúcelo con un reproductor de Lottie."
+      }
+    ],
+    "useIf": [
+      "Quieres iconos que se muevan para dar vida a la web.",
+      "Haces una landing o una presentación.",
+      "No quieres animar los iconos tú."
+    ],
+    "avoidIf": [
+      "Necesitas iconos pequeños en una interfaz densa.",
+      "Te preocupa el peso de la página."
+    ],
+    "pairsWith": ["motion", "react-bits", "astro"]
   },
   {
     "slug": "svgl",
@@ -606,10 +1637,30 @@
     "description": "SVGL reúne más de 600 logos de marcas y servicios en SVG optimizado, buscables y ordenados por categorías, muchos con variante para modo claro y oscuro. No hace falta atribución y hay una API para consultarlos desde código. Es lo que necesitas para una sección de integraciones o un pie con las tecnologías que usas.",
     "website": "https://svgl.app",
     "docs": "https://github.com/pheralb/svgl#readme",
-    "repo": "https://github.com/pheralb/svgl",
     "tags": ["logos", "marcas", "svg", "api"],
     "pricing": "gratis",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Busca el logo en svgl.app."
+      },
+      {
+        "text": "Copia el SVG o descárgalo."
+      },
+      {
+        "text": "Pégalo en tu proyecto o úsalo como componente."
+      }
+    ],
+    "useIf": [
+      "Necesitas logos de marcas en SVG, rápido.",
+      "Quieres versiones para modo claro y oscuro.",
+      "Haces una sección de clientes o tecnologías."
+    ],
+    "avoidIf": [
+      "Buscas iconos de interfaz.",
+      "Necesitas un paquete de npm con todos los logos."
+    ],
+    "pairsWith": ["shadcn-ui", "nextjs", "tailwindcss"]
   },
   {
     "slug": "dribbble",
@@ -620,7 +1671,28 @@
     "website": "https://dribbble.com",
     "tags": ["galería", "ui", "conceptos"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Busca el tipo de pantalla que vas a diseñar."
+      },
+      {
+        "text": "Guarda en una colección lo que te guste."
+      },
+      {
+        "text": "Anota qué te gusta de cada diseño: color, tipografía, espacio."
+      }
+    ],
+    "useIf": [
+      "Buscas ideas de interfaz, colores o ilustración.",
+      "Vas a diseñar una pantalla concreta.",
+      "Quieres ver tendencias de diseño actuales."
+    ],
+    "avoidIf": [
+      "Buscas webs reales y funcionando.",
+      "Necesitas ejemplos de código."
+    ],
+    "pairsWith": ["shadcn-ui", "tailwindcss", "lucide"]
   },
   {
     "slug": "awwwards",
@@ -631,7 +1703,28 @@
     "website": "https://www.awwwards.com",
     "tags": ["galería", "diseño-web", "animación"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Explora las webs premiadas del día y del mes."
+      },
+      {
+        "text": "Filtra por categoría, color o tecnología."
+      },
+      {
+        "text": "Abre la web real y fíjate en cómo se mueve."
+      }
+    ],
+    "useIf": [
+      "Quieres ver lo mejor del diseño web actual.",
+      "Buscas ideas de animación y scroll.",
+      "Haces una web creativa o un portfolio."
+    ],
+    "avoidIf": [
+      "Buscas diseños sencillos y fáciles de copiar.",
+      "Haces una aplicación o un panel."
+    ],
+    "pairsWith": ["gsap", "lenis", "threejs"]
   },
   {
     "slug": "land-book",
@@ -642,6 +1735,27 @@
     "website": "https://land-book.com",
     "tags": ["landing", "galería", "filtros"],
     "pricing": "freemium",
-    "level": "principiante"
+    "level": "principiante",
+    "start": [
+      {
+        "text": "Filtra por tipo de página: SaaS, portfolio, tienda."
+      },
+      {
+        "text": "Guarda las que te gusten."
+      },
+      {
+        "text": "Compara cómo ordenan las secciones de la página."
+      }
+    ],
+    "useIf": [
+      "Vas a hacer una landing page.",
+      "Quieres ver cómo estructuran otras webs sus secciones.",
+      "Buscas ideas probadas, no experimentales."
+    ],
+    "avoidIf": [
+      "Buscas diseño de aplicaciones o paneles.",
+      "Quieres efectos y animaciones muy creativos."
+    ],
+    "pairsWith": ["magicui", "tailwindcss", "astro"]
   }
 ]

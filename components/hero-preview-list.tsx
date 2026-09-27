@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { ArrowRight } from "lucide-react"
 
 import { ToolMark } from "@/components/tool-mark"
+import { toneStyle } from "@/lib/tones"
 import type { Category, Tool } from "@/lib/types"
 
 const VISIBLE = 6
@@ -86,7 +87,7 @@ export function HeroPreviewList({ groups }: { groups: Group[] }) {
         const tool = tools[rotation.steps[group] % tools.length]
 
         return (
-          <li key={slot}>
+          <li key={slot} style={toneStyle(category.slug)}>
             <Link
               href={`/t/${tool.slug}`}
               className="group -mx-2 flex items-center gap-3 rounded-md px-2 py-1.5 transition-colors outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50"
@@ -100,7 +101,7 @@ export function HeroPreviewList({ groups }: { groups: Group[] }) {
                   <span className="block truncate text-sm font-medium">
                     {tool.name}
                   </span>
-                  <span className="block truncate text-xs text-muted-foreground">
+                  <span className="block truncate text-xs text-tone">
                     {category.name}
                   </span>
                 </span>

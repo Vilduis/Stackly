@@ -37,9 +37,7 @@ export function HomeSearch() {
           className="pl-8"
         />
       </div>
-      <Button type="submit" variant="secondary">
-        Buscar
-      </Button>
+      <Button type="submit">Buscar</Button>
     </form>
   )
 }

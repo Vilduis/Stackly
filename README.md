@@ -44,8 +44,8 @@ lib/         categorías, búsqueda, logos, tonos y tipos
 ## Empezar
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Scripts disponibles: `dev`, `build`, `start`, `lint`, `format` y `typecheck`.

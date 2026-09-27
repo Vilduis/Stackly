@@ -25,6 +25,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { CATEGORIES } from "@/lib/categories"
+import { countLabel } from "@/lib/format"
+import { LEVEL_LABELS, PRICING_LABELS } from "@/lib/labels"
 import {
   collectTags,
   EMPTY_FILTERS,
@@ -41,24 +43,20 @@ const PAGE_SIZE = 15
 
 const PAGE_WINDOW = 1
 
-const LEVEL_ITEMS: Record<string, string> = {
+const LEVEL_ITEMS: Record<Filters["level"], string> = {
   todos: "Todos los niveles",
-  principiante: "Principiante",
-  intermedio: "Intermedio",
-  avanzado: "Avanzado",
+  ...LEVEL_LABELS,
 }
 
-const PRICING_ITEMS: Record<string, string> = {
+const PRICING_ITEMS: Record<Filters["pricing"], string> = {
   todos: "Todos los precios",
-  gratis: "Gratis",
-  freemium: "Freemium",
-  pago: "De pago",
+  ...PRICING_LABELS,
 }
 
-const CATEGORY_ITEMS: Record<string, string> = {
+const CATEGORY_ITEMS = {
   todas: "Todas las categorías",
   ...Object.fromEntries(CATEGORIES.map((c) => [c.slug, c.name])),
-}
+} as Record<Filters["category"], string>
 
 export function ToolExplorer({
   tools,
@@ -125,63 +123,30 @@ export function ToolExplorer({
         </div>
 
         {showCategoryFilter ? (
-          <Select
+          <FilterSelect
+            label="Categoría"
             items={CATEGORY_ITEMS}
             value={filters.category}
-            onValueChange={(value) =>
-              update({ category: value as Filters["category"] })
-            }
-          >
-            <SelectTrigger aria-label="Categoría" className="w-full sm:w-52">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.entries(CATEGORY_ITEMS).map(([value, label]) => (
-                <SelectItem key={value} value={value}>
-                  {label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            onChange={(category) => update({ category })}
+            className="w-full sm:w-52"
+          />
         ) : null}
 
-        <Select
+        <FilterSelect
+          label="Nivel"
           items={LEVEL_ITEMS}
           value={filters.level}
-          onValueChange={(value) =>
-            update({ level: value as Filters["level"] })
-          }
-        >
-          <SelectTrigger aria-label="Nivel" className="w-full sm:w-44">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.entries(LEVEL_ITEMS).map(([value, label]) => (
-              <SelectItem key={value} value={value}>
-                {label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onChange={(level) => update({ level })}
+          className="w-full sm:w-44"
+        />
 
-        <Select
+        <FilterSelect
+          label="Precio"
           items={PRICING_ITEMS}
           value={filters.pricing}
-          onValueChange={(value) =>
-            update({ pricing: value as Filters["pricing"] })
-          }
-        >
-          <SelectTrigger aria-label="Precio" className="w-full sm:w-44">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.entries(PRICING_ITEMS).map(([value, label]) => (
-              <SelectItem key={value} value={value}>
-                {label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onChange={(pricing) => update({ pricing })}
+          className="w-full sm:w-44"
+        />
       </div>
 
       {tags.length > 0 ? (
@@ -197,7 +162,7 @@ export function ToolExplorer({
                 aria-pressed={active}
                 className={cn(
                   badgeVariants({ variant: active ? "default" : "outline" }),
-                  "cursor-pointer transition-colors",
+                  "cursor-pointer font-mono transition-colors",
                   !active && "text-muted-foreground hover:bg-muted"
                 )}
               >
@@ -209,9 +174,8 @@ export function ToolExplorer({
       ) : null}
 
       <div className="mt-6 flex items-center gap-3">
-        <p className="text-sm text-muted-foreground">
-          {results.length}{" "}
-          {results.length === 1 ? "herramienta" : "herramientas"}
+        <p className="font-mono text-xs text-muted-foreground tabular-nums">
+          {countLabel(results.length, "herramienta")}
           {pageCount > 1 ? ` · página ${page} de ${pageCount}` : null}
         </p>
         {isFiltered ? (
@@ -281,6 +245,39 @@ export function ToolExplorer({
         </Pagination>
       ) : null}
     </section>
+  )
+}
+
+function FilterSelect<T extends string>({
+  label,
+  items,
+  value,
+  onChange,
+  className,
+}: {
+  label: string
+  items: Record<T, string>
+  value: T
+  onChange: (value: T) => void
+  className?: string
+}) {
+  return (
+    <Select
+      items={items}
+      value={value}
+      onValueChange={(next) => onChange(next as T)}
+    >
+      <SelectTrigger aria-label={label} className={className}>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {(Object.entries(items) as [T, string][]).map(([option, text]) => (
+          <SelectItem key={option} value={option}>
+            {text}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 

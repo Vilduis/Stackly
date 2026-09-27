@@ -1,19 +1,15 @@
 import { CATEGORIES } from "@/lib/categories"
 import type { CategorySlug } from "@/lib/types"
 
-const FIRST_HUE = 258.2
-
-const LAST_HUE = 362.5
+const FIRST_HUE = 290
 
 function categoryHue(slug: CategorySlug): number {
-  const index = CATEGORIES.findIndex((category) => category.slug === slug)
-  const steps = CATEGORIES.length - 1
+  const index = Math.max(
+    0,
+    CATEGORIES.findIndex((category) => category.slug === slug)
+  )
 
-  if (index < 0 || steps < 1) {
-    return FIRST_HUE
-  }
-
-  return FIRST_HUE + ((LAST_HUE - FIRST_HUE) * index) / steps
+  return (FIRST_HUE + (360 * index) / CATEGORIES.length) % 360
 }
 
 export function toneStyle(slug: CategorySlug): React.CSSProperties {

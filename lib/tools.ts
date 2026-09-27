@@ -1,7 +1,6 @@
 import toolsData from "@/content/tools.json"
 import type { CategorySlug, Tool } from "@/lib/types"
 
-
 const tools = toolsData as Tool[]
 
 export async function getTools(): Promise<Tool[]> {
@@ -28,4 +27,10 @@ export async function countToolsByCategory(): Promise<
   }
 
   return counts
+}
+
+export async function getToolsBySlugs(slugs: string[]): Promise<Tool[]> {
+  return slugs
+    .map((slug) => tools.find((tool) => tool.slug === slug))
+    .filter((tool): tool is Tool => tool !== undefined)
 }
