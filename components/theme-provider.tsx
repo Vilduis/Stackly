@@ -10,8 +10,8 @@ function ThemeProvider({
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="dark"
-      enableSystem={false}
+      defaultTheme="system"
+      enableSystem
       disableTransitionOnChange
       {...props}
     >
@@ -43,11 +43,11 @@ function ThemeHotkey() {
         return
       }
 
-      if (event.metaKey || event.ctrlKey || event.altKey) {
+      if (event.metaKey || event.ctrlKey) {
         return
       }
 
-      if (event.key.toLowerCase() !== "d") {
+      if (!event.altKey || !event.shiftKey || event.code !== "KeyD") {
         return
       }
 

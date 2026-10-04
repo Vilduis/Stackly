@@ -7,7 +7,7 @@ export function ToolMark({
   tool,
   className,
 }: {
-  tool: Tool
+  tool: Pick<Tool, "slug" | "name" | "category">
   className?: string
 }) {
   const logo = getLogo(tool.slug)

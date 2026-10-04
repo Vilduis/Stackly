@@ -5,10 +5,10 @@ import { cn } from "@/lib/utils"
 
 const PRICING_STYLES: Record<Pricing, string> = {
   gratis:
-    "border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
+    "border-positive/25 bg-positive/10 text-positive",
   freemium:
-    "border-amber-500/25 bg-amber-500/10 text-amber-700 dark:text-amber-300",
-  pago: "border-rose-500/25 bg-rose-500/10 text-rose-700 dark:text-rose-300",
+    "border-caution/25 bg-caution/10 text-caution",
+  pago: "border-negative/25 bg-negative/10 text-negative",
 }
 
 export function PricingBadge({ pricing }: { pricing: Pricing }) {

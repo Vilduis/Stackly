@@ -60,11 +60,9 @@ const CATEGORY_ITEMS = {
 
 export function ToolExplorer({
   tools,
-  showCategoryFilter = false,
   initialQuery = "",
 }: {
   tools: Tool[]
-  showCategoryFilter?: boolean
   initialQuery?: string
 }) {
   const [filters, setFilters] = useState<Filters>({
@@ -122,15 +120,13 @@ export function ToolExplorer({
           />
         </div>
 
-        {showCategoryFilter ? (
-          <FilterSelect
-            label="Categoría"
-            items={CATEGORY_ITEMS}
-            value={filters.category}
-            onChange={(category) => update({ category })}
-            className="w-full sm:w-52"
-          />
-        ) : null}
+        <FilterSelect
+          label="Categoría"
+          items={CATEGORY_ITEMS}
+          value={filters.category}
+          onChange={(category) => update({ category })}
+          className="w-full sm:w-52"
+        />
 
         <FilterSelect
           label="Nivel"
@@ -162,7 +158,7 @@ export function ToolExplorer({
                 aria-pressed={active}
                 className={cn(
                   badgeVariants({ variant: active ? "default" : "outline" }),
-                  "cursor-pointer font-mono transition-colors",
+                  "cursor-pointer font-mono transition-colors max-sm:h-8 max-sm:px-3",
                   !active && "text-muted-foreground hover:bg-muted"
                 )}
               >
@@ -198,11 +194,7 @@ export function ToolExplorer({
           className="mt-4 grid scroll-mt-8 gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
           {visible.map((tool) => (
-            <ToolCard
-              key={tool.slug}
-              tool={tool}
-              showCategory={showCategoryFilter}
-            />
+            <ToolCard key={tool.slug} tool={tool} showCategory />
           ))}
         </div>
       )}

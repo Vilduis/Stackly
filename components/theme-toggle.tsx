@@ -13,7 +13,7 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       aria-label="Cambiar tema"
-      title="Cambiar tema (tecla D)"
+      title="Cambiar tema (Alt + Mayús + D)"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       <Sun className="hidden dark:block" />

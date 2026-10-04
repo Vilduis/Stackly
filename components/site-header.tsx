@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Layers, Search } from "lucide-react"
+import { Columns2, Layers, Search } from "lucide-react"
 
 import { ThemeToggle } from "@/components/theme-toggle"
 import { buttonVariants } from "@/components/ui/button"
@@ -14,6 +14,15 @@ export function SiteHeader() {
         >
           <Layers className="size-5" aria-hidden />
           Stackly
+        </Link>
+
+        <Link
+          href="/comparar"
+          aria-label="Comparar"
+          className={buttonVariants({ variant: "ghost", size: "sm" })}
+        >
+          <Columns2 />
+          <span className="max-sm:sr-only">Comparar</span>
         </Link>
 
         <Link

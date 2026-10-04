@@ -59,7 +59,6 @@ export default function RootLayout({
     <html
       lang="es"
       suppressHydrationWarning
-      style={{ colorScheme: "dark" }}
       className={cn(
         "dark antialiased",
         fontMono.variable,

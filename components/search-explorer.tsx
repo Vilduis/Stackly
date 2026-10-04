@@ -8,12 +8,5 @@ import type { Tool } from "@/lib/types"
 export function SearchExplorer({ tools }: { tools: Tool[] }) {
   const query = useSearchParams().get("q") ?? ""
 
-  return (
-    <ToolExplorer
-      key={query}
-      tools={tools}
-      showCategoryFilter
-      initialQuery={query}
-    />
-  )
+  return <ToolExplorer key={query} tools={tools} initialQuery={query} />
 }

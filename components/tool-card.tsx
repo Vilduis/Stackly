@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { BookOpen, ExternalLink } from "lucide-react"
+import { BookOpen, Check, Columns2, ExternalLink } from "lucide-react"
 
 import { ToneEdge } from "@/components/tone-edge"
 import { LevelBadge, PricingBadge } from "@/components/tool-badges"
@@ -16,13 +16,18 @@ import {
 import { getCategory } from "@/lib/categories"
 import { toneStyle } from "@/lib/tones"
 import type { Tool } from "@/lib/types"
+import { cn } from "@/lib/utils"
 
 export function ToolCard({
   tool,
   showCategory = false,
+  comparing = false,
+  onCompare,
 }: {
   tool: Tool
   showCategory?: boolean
+  comparing?: boolean
+  onCompare?: () => void
 }) {
   const category = showCategory ? getCategory(tool.category) : null
 
@@ -57,15 +62,6 @@ export function ToolCard({
           ) : null}
           <PricingBadge pricing={tool.pricing} />
           <LevelBadge level={tool.level} />
-          {tool.tags.slice(0, 3).map((tag) => (
-            <Badge
-              key={tag}
-              variant="outline"
-              className="font-mono text-muted-foreground"
-            >
-              {tag}
-            </Badge>
-          ))}
         </div>
       </CardContent>
 
@@ -79,6 +75,22 @@ export function ToolCard({
             <BookOpen />
             Docs
           </ToolLink>
+        ) : null}
+        {onCompare ? (
+          <button
+            type="button"
+            aria-pressed={comparing}
+            onClick={onCompare}
+            className={cn(
+              "relative z-10 ml-auto inline-flex h-7 items-center gap-1.5 rounded-md px-2 font-medium ring-1 transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:h-10 max-sm:px-3 [&>svg]:size-3.5",
+              comparing
+                ? "bg-tone/15 text-foreground ring-tone/40"
+                : "text-muted-foreground ring-border hover:bg-muted hover:text-foreground"
+            )}
+          >
+            {comparing ? <Check aria-hidden /> : <Columns2 aria-hidden />}
+            Comparar
+          </button>
         ) : null}
       </CardFooter>
     </Card>
@@ -97,7 +109,7 @@ function ToolLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="relative z-10 inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground [&>svg]:size-3.5"
+      className="relative z-10 inline-flex items-center gap-1.5 rounded-sm text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:min-h-10 [&>svg]:size-3.5"
     >
       {children}
     </a>

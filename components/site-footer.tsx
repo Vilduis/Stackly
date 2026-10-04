@@ -44,6 +44,7 @@ export async function SiteFooter() {
           <FooterColumn title="Explorar" className="lg:col-span-3">
             <ul className="mt-3 space-y-2">
               <FooterLink href="/">Inicio</FooterLink>
+              <FooterLink href="/comparar">Comparar herramientas</FooterLink>
               <FooterLink href="/buscar">Buscar herramientas</FooterLink>
             </ul>
           </FooterColumn>

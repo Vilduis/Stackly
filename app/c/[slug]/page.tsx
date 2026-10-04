@@ -4,11 +4,12 @@ import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 
 import { CategoryIcon } from "@/components/category-icon"
-import { ToolExplorer } from "@/components/tool-explorer"
+import { LineView } from "@/components/line-view"
 import { Separator } from "@/components/ui/separator"
 import { CATEGORIES, getCategory } from "@/lib/categories"
 import { buildMetadata } from "@/lib/metadata"
 import { toneStyle } from "@/lib/tones"
+import { sortByLevel } from "@/lib/routes"
 import { getToolsByCategory } from "@/lib/tools"
 
 type CategoryPageProps = {
@@ -44,13 +45,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound()
   }
 
-  const tools = await getToolsByCategory(category.slug)
+  const tools = sortByLevel(await getToolsByCategory(category.slug))
 
   return (
     <main style={toneStyle(category.slug)} className="container-page py-16">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-tone"
+        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-tone max-sm:-my-2 max-sm:py-2"
       >
         <ArrowLeft className="size-4" aria-hidden />
         Categorías
@@ -75,7 +76,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
       <Separator className="my-8" />
 
-      <ToolExplorer tools={tools} />
+      <LineView tools={tools} />
     </main>
   )
 }

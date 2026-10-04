@@ -49,7 +49,7 @@ type Gradiente = {
   stops: { offset: number; color: string }[]
 }
 
-export type Logo = {
+type Logo = {
   path: string
   viewBox: string
   light: string | null

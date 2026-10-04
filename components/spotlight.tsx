@@ -1,5 +1,7 @@
 "use client"
 
+const pending = new Map<HTMLElement, { clientX: number; clientY: number }>()
+
 export function trackSpotlight(event: React.PointerEvent<HTMLElement>) {
   const card = (event.target as Element).closest<HTMLElement>(
     "[data-spotlight]"
@@ -9,10 +11,28 @@ export function trackSpotlight(event: React.PointerEvent<HTMLElement>) {
     return
   }
 
-  const rect = card.getBoundingClientRect()
+  const { clientX, clientY } = event
 
-  card.style.setProperty("--mx", `${event.clientX - rect.left}px`)
-  card.style.setProperty("--my", `${event.clientY - rect.top}px`)
+  if (pending.has(card)) {
+    pending.set(card, { clientX, clientY })
+    return
+  }
+
+  pending.set(card, { clientX, clientY })
+
+  requestAnimationFrame(() => {
+    const point = pending.get(card)
+    pending.delete(card)
+
+    if (!point) {
+      return
+    }
+
+    const rect = card.getBoundingClientRect()
+
+    card.style.setProperty("--mx", `${point.clientX - rect.left}px`)
+    card.style.setProperty("--my", `${point.clientY - rect.top}px`)
+  })
 }
 
 export function Spotlight({

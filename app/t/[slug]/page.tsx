@@ -6,6 +6,7 @@ import {
   ArrowRight,
   BookOpen,
   Check,
+  Columns2,
   ExternalLink,
   X,
 } from "lucide-react"
@@ -19,6 +20,7 @@ import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { getCategory } from "@/lib/categories"
+import { sortByLevel } from "@/lib/routes"
 import { buildMetadata } from "@/lib/metadata"
 import { toneStyle } from "@/lib/tones"
 import {
@@ -29,8 +31,6 @@ import {
 } from "@/lib/tools"
 import type { Tool } from "@/lib/types"
 import { cn } from "@/lib/utils"
-
-const MAX_ALTERNATIVES = 4
 
 type ToolPageProps = {
   params: Promise<{ slug: string }>
@@ -77,16 +77,16 @@ export default async function ToolPage({ params }: ToolPageProps) {
     getToolsByCategory(tool.category),
     getToolsBySlugs(tool.pairsWith),
   ])
-  const alternatives = siblings
-    .filter((other) => other.slug !== tool.slug)
-    .slice(0, MAX_ALTERNATIVES)
+  const alternatives = sortByLevel(siblings).filter(
+    (other) => other.slug !== tool.slug
+  )
 
   return (
     <main style={toneStyle(tool.category)} className="container-page py-16">
       {category ? (
         <Link
           href={`/c/${category.slug}`}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-tone"
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-tone max-sm:-my-2 max-sm:py-2"
         >
           <ArrowLeft className="size-4" aria-hidden />
           {category.name}
@@ -96,11 +96,13 @@ export default async function ToolPage({ params }: ToolPageProps) {
       <header className="mt-6 max-w-3xl">
         <div className="flex items-center gap-4">
           <ToolMark tool={tool} className="size-14 rounded-xl text-xl" />
-          <h1 className="min-w-0 text-title font-semibold tracking-tight">
+          <h1 className="min-w-0 font-heading text-title tracking-tight">
             {tool.name}
           </h1>
         </div>
-        <p className="mt-5 text-muted-foreground">{tool.tagline}</p>
+        <p className="mt-5 max-w-2xl text-base text-pretty text-muted-foreground sm:text-lg">
+          {tool.tagline}
+        </p>
 
         <div className="mt-6 flex flex-wrap gap-1.5">
           {category ? (
@@ -123,35 +125,37 @@ export default async function ToolPage({ params }: ToolPageProps) {
       <Separator className="my-8" />
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12">
-        <div className="min-w-0 lg:col-start-1 lg:row-start-1">
-          <p className="text-base leading-relaxed">{tool.description}</p>
-
-          {tool.tags.length > 0 ? (
-            <div className="mt-8">
-              <h2 className="eyebrow">Etiquetas</h2>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {tool.tags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="outline"
-                    className="font-mono text-muted-foreground"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          ) : null}
+        <div className="min-w-0 max-lg:order-1 lg:col-start-1 lg:row-start-1">
+          <FitSection tool={tool} />
         </div>
 
-        <aside className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-          <div className="lg:sticky lg:top-20">
-            <StartPanel tool={tool} />
-          </div>
-        </aside>
+        <div className="min-w-0 space-y-14 max-lg:order-3 lg:col-start-1 lg:row-start-2">
+          <section>
+            <h2 className="font-heading text-subsection tracking-tight">
+              Qué es
+            </h2>
+            <p className="mt-4 max-w-prose text-base leading-relaxed text-pretty">
+              {tool.description}
+            </p>
 
-        <div className="min-w-0 space-y-14 lg:col-start-1 lg:row-start-2">
-          <FitSection tool={tool} />
+            {tool.tags.length > 0 ? (
+              <ul
+                className="mt-6 flex flex-wrap gap-1.5"
+                aria-label="Etiquetas"
+              >
+                {tool.tags.map((tag) => (
+                  <li key={tag}>
+                    <Badge
+                      variant="outline"
+                      className="font-mono text-muted-foreground"
+                    >
+                      {tag}
+                    </Badge>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </section>
 
           {pairs.length > 0 ? <PairsSection pairs={pairs} /> : null}
 
@@ -160,14 +164,24 @@ export default async function ToolPage({ params }: ToolPageProps) {
               <h2 className="font-heading text-subsection tracking-tight">
                 Alternativas en {category.name}
               </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Ordenadas de principiante a avanzado. Compáralas con {tool.name}{" "}
+                lado a lado.
+              </p>
               <ol className="mt-5 divide-y divide-border overflow-hidden rounded-xl ring-1 ring-foreground/10">
-                {alternatives.map((other, index) => (
-                  <AlternativeRow key={other.slug} tool={other} index={index} />
+                {alternatives.map((other) => (
+                  <AlternativeRow key={other.slug} tool={other} base={tool} />
                 ))}
               </ol>
             </section>
           ) : null}
         </div>
+
+        <aside className="min-w-0 max-lg:order-2 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <div className="lg:sticky lg:top-20">
+            <StartPanel tool={tool} />
+          </div>
+        </aside>
       </div>
 
       <ClosingBanner tool={tool} />
@@ -179,7 +193,9 @@ function StartPanel({ tool }: { tool: Tool }) {
   return (
     <section className="relative overflow-hidden rounded-xl bg-card p-5 ring-1 ring-foreground/10">
       <ToneEdge />
-      <h2 className="eyebrow">Cómo empezar</h2>
+      <h2 className="font-heading text-subsection tracking-tight">
+        Cómo empezar
+      </h2>
 
       <ol className="mt-5 space-y-5">
         {tool.start.map((step, index) => (
@@ -231,13 +247,13 @@ function FitSection({ tool }: { tool: Tool }) {
           title="Úsalo si…"
           items={tool.useIf}
           icon={<Check className="size-3.5" />}
-          tone="border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+          tone="border-positive/25 bg-positive/10 text-positive"
         />
         <FitList
           title="Mejor evítalo si…"
           items={tool.avoidIf}
           icon={<X className="size-3.5" />}
-          tone="border-rose-500/25 bg-rose-500/10 text-rose-700 dark:text-rose-300"
+          tone="border-negative/25 bg-negative/10 text-negative"
         />
       </div>
     </section>
@@ -312,16 +328,13 @@ function PairsSection({ pairs }: { pairs: Tool[] }) {
   )
 }
 
-function AlternativeRow({ tool, index }: { tool: Tool; index: number }) {
+function AlternativeRow({ tool, base }: { tool: Tool; base: Tool }) {
   return (
-    <li>
+    <li className="flex items-center">
       <Link
         href={`/t/${tool.slug}`}
-        className="group flex items-center gap-4 p-4 transition-colors outline-none hover:bg-muted/50 focus-visible:bg-muted/50"
+        className="group flex min-w-0 flex-1 items-center gap-4 p-4 transition-colors outline-none hover:bg-muted/50 focus-visible:bg-muted/50"
       >
-        <span className="w-6 shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
-          {String(index + 1).padStart(2, "0")}
-        </span>
         <ToolMark tool={tool} className="size-9 text-sm" />
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-medium">{tool.name}</span>
@@ -338,6 +351,14 @@ function AlternativeRow({ tool, index }: { tool: Tool; index: number }) {
           className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
         />
       </Link>
+      <Link
+        href={`/comparar?a=${base.slug}&b=${tool.slug}`}
+        aria-label={`Comparar ${base.name} con ${tool.name}`}
+        title="Comparar"
+        className="mr-3 flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      >
+        <Columns2 aria-hidden className="size-4" />
+      </Link>
     </li>
   )
 }
@@ -353,8 +374,7 @@ function ClosingBanner({ tool }: { tool: Tool }) {
       />
       <div className="relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div className="max-w-md">
-          <p className="eyebrow">Siguiente paso</p>
-          <h2 className="mt-3 font-heading text-section tracking-tight text-balance">
+          <h2 className="font-heading text-section tracking-tight text-balance">
             ¿Listo para {verb} {tool.name}?
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">

@@ -36,14 +36,17 @@ export function CodeSnippet({ code }: { code: string }) {
         type="button"
         onClick={copy}
         aria-label={copied ? "Copiado" : "Copiar comando"}
-        className="mr-1 flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none hover:bg-background hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+        className="mr-1 flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none hover:bg-background hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50 max-sm:size-10"
       >
         {copied ? (
-          <Check className="size-3.5 text-emerald-500" />
+          <Check className="size-3.5 text-positive" />
         ) : (
           <Copy className="size-3.5" />
         )}
       </button>
+      <span role="status" aria-live="polite" className="sr-only">
+        {copied ? "Comando copiado al portapapeles" : ""}
+      </span>
     </div>
   )
 }

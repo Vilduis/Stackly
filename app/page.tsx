@@ -3,8 +3,8 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 import { CategoryIcon } from "@/components/category-icon"
-import { HeroPreview } from "@/components/hero-preview"
 import { HomeSearch } from "@/components/home-search"
+import { RoutePlanner } from "@/components/route-planner"
 import { SearchSuggestions } from "@/components/search-suggestions"
 import { Spotlight } from "@/components/spotlight"
 import { ToneEdge } from "@/components/tone-edge"
@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { CATEGORIES } from "@/lib/categories"
+import { toPlannerTool } from "@/lib/routes"
 import { countToolsByCategory, getTools } from "@/lib/tools"
 import { toneStyle } from "@/lib/tones"
 import type { Tool } from "@/lib/types"
@@ -45,19 +46,16 @@ export default async function HomePage() {
   return (
     <main className="hero-grid">
       <div className="container-page pt-16 pb-4 sm:pt-24 sm:pb-8">
-        <section className="relative grid items-center gap-12 lg:grid-cols-5 lg:gap-16">
-          <div className="lg:col-span-3">
-            <p className="eyebrow mb-5">
-              {tools.length} herramientas · {CATEGORIES.length} categorías
-            </p>
+        <section className="relative grid items-start gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-6 lg:pt-16">
             <h1 className="max-w-xl font-heading text-hero tracking-tight text-balance">
               Elige las herramientas de tu{" "}
               <span className="italic">próxima</span> web
             </h1>
             <p className="mt-6 max-w-lg text-base text-pretty text-muted-foreground sm:text-lg">
-              Si sabes qué quieres construir pero no con qué, aquí tienes las
-              opciones ordenadas por categoría, con qué hace cada una y cuándo
-              conviene.
+              Si sabes qué quieres construir pero no con qué, aquí tienes{" "}
+              {tools.length} herramientas en {CATEGORIES.length} categorías, con
+              qué hace cada una, cuándo conviene y cuándo no.
             </p>
 
             <div className="mt-8">
@@ -69,13 +67,12 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="lg:col-span-2">
-            <HeroPreview />
+          <div className="lg:col-span-6">
+            <RoutePlanner tools={tools.map(toPlannerTool)} />
           </div>
         </section>
 
         <section className="mt-20 sm:mt-28">
-          <p className="eyebrow mb-3">Explora por área</p>
           <h2 className="font-heading text-section tracking-tight">
             Categorías
           </h2>
