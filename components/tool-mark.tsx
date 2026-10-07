@@ -17,25 +17,25 @@ export function ToolMark({
     .charAt(0)
     .toUpperCase()
 
-  const escala = logo && logo.ratio > 1.4 ? "w-[76%]" : "size-[62%]"
-  const gradienteId = logo?.gradient ? `marca-${tool.slug}` : null
+  const scale = logo && logo.ratio > 1.4 ? "w-[76%]" : "size-[62%]"
+  const gradientId = logo?.gradient ? `logo-${tool.slug}` : null
 
-  let pintura: React.CSSProperties | undefined
+  let paint: React.CSSProperties | undefined
 
-  if (gradienteId) {
-    pintura = {
-      "--marca": `url(#${gradienteId})`,
-      "--marca-oscura": `url(#${gradienteId})`,
+  if (gradientId) {
+    paint = {
+      "--logo-fill": `url(#${gradientId})`,
+      "--logo-fill-dark": `url(#${gradientId})`,
     } as React.CSSProperties
   } else if (logo?.fondo) {
-    pintura = {
-      "--marca": "#fff",
-      "--marca-oscura": "#fff",
+    paint = {
+      "--logo-fill": "#fff",
+      "--logo-fill-dark": "#fff",
     } as React.CSSProperties
   } else if (logo?.light) {
-    pintura = {
-      "--marca": logo.light,
-      "--marca-oscura": logo.dark,
+    paint = {
+      "--logo-fill": logo.light,
+      "--logo-fill-dark": logo.dark,
     } as React.CSSProperties
   }
 
@@ -58,14 +58,14 @@ export function ToolMark({
       {logo ? (
         <svg
           viewBox={logo.viewBox}
-          className={cn("tool-mark-logo", escala)}
-          style={pintura}
+          className={cn("tool-mark-logo", scale)}
+          style={paint}
           role="presentation"
         >
-          {logo.gradient && gradienteId ? (
+          {logo.gradient && gradientId ? (
             <defs>
               <linearGradient
-                id={gradienteId}
+                id={gradientId}
                 x1={logo.gradient.x1}
                 y1={logo.gradient.y1}
                 x2={logo.gradient.x2}

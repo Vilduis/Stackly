@@ -5,14 +5,13 @@ import {
   ArrowLeft,
   ArrowRight,
   BookOpen,
-  Check,
   Columns2,
   ExternalLink,
-  X,
 } from "lucide-react"
 
 import { CategoryIcon } from "@/components/category-icon"
 import { CodeSnippet } from "@/components/code-snippet"
+import { ReasonList } from "@/components/reason-list"
 import { ToneEdge } from "@/components/tone-edge"
 import { LevelBadge, PricingBadge } from "@/components/tool-badges"
 import { ToolMark } from "@/components/tool-mark"
@@ -131,9 +130,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
         <div className="min-w-0 space-y-14 max-lg:order-3 lg:col-start-1 lg:row-start-2">
           <section>
-            <h2 className="font-heading text-subsection tracking-tight">
-              Qué es
-            </h2>
+            <h2 className="font-heading text-subsection">Qué es</h2>
             <p className="mt-4 max-w-prose text-base leading-relaxed text-pretty">
               {tool.description}
             </p>
@@ -145,10 +142,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
               >
                 {tool.tags.map((tag) => (
                   <li key={tag}>
-                    <Badge
-                      variant="outline"
-                      className="font-mono text-muted-foreground"
-                    >
+                    <Badge variant="outline" className="text-muted-foreground">
                       {tag}
                     </Badge>
                   </li>
@@ -161,7 +155,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
           {alternatives.length > 0 && category ? (
             <section>
-              <h2 className="font-heading text-subsection tracking-tight">
+              <h2 className="font-heading text-subsection">
                 Alternativas en {category.name}
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -184,7 +178,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
         </aside>
       </div>
 
-      <ClosingBanner tool={tool} />
+      <ClosingBanner tool={tool} rival={alternatives[0]} />
     </main>
   )
 }
@@ -193,16 +187,14 @@ function StartPanel({ tool }: { tool: Tool }) {
   return (
     <section className="relative overflow-hidden rounded-xl bg-card p-5 ring-1 ring-foreground/10">
       <ToneEdge />
-      <h2 className="font-heading text-subsection tracking-tight">
-        Cómo empezar
-      </h2>
+      <h2 className="font-heading text-subsection">Cómo empezar</h2>
 
       <ol className="mt-5 space-y-5">
         {tool.start.map((step, index) => (
           <li key={step.text} className="flex gap-3">
             <span
               aria-hidden
-              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-tone/12 font-mono text-xs text-tone ring-1 ring-tone/25"
+              className="flex size-6 shrink-0 items-center justify-center rounded-full bg-tone/12 text-xs font-medium text-tone tabular-nums ring-1 ring-tone/25"
             >
               {index + 1}
             </span>
@@ -239,21 +231,13 @@ function StartPanel({ tool }: { tool: Tool }) {
 function FitSection({ tool }: { tool: Tool }) {
   return (
     <section>
-      <h2 className="font-heading text-subsection tracking-tight">
-        ¿Es para ti?
-      </h2>
+      <h2 className="font-heading text-subsection">¿Es para ti?</h2>
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <FitList
-          title="Úsalo si…"
-          items={tool.useIf}
-          icon={<Check className="size-3.5" />}
-          tone="border-positive/25 bg-positive/10 text-positive"
-        />
+        <FitList title="Úsalo si…" items={tool.useIf} positive />
         <FitList
           title="Mejor evítalo si…"
           items={tool.avoidIf}
-          icon={<X className="size-3.5" />}
-          tone="border-negative/25 bg-negative/10 text-negative"
+          positive={false}
         />
       </div>
     </section>
@@ -263,33 +247,18 @@ function FitSection({ tool }: { tool: Tool }) {
 function FitList({
   title,
   items,
-  icon,
-  tone,
+  positive,
 }: {
   title: string
   items: string[]
-  icon: React.ReactNode
-  tone: string
+  positive: boolean
 }) {
   return (
     <div className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
       <h3 className="text-sm font-medium">{title}</h3>
-      <ul className="mt-4 space-y-3">
-        {items.map((item) => (
-          <li key={item} className="flex gap-2.5 text-sm text-muted-foreground">
-            <span
-              aria-hidden
-              className={cn(
-                "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border",
-                tone
-              )}
-            >
-              {icon}
-            </span>
-            {item}
-          </li>
-        ))}
-      </ul>
+      <div className="mt-4">
+        <ReasonList items={items} positive={positive} />
+      </div>
     </div>
   )
 }
@@ -297,9 +266,7 @@ function FitList({
 function PairsSection({ pairs }: { pairs: Tool[] }) {
   return (
     <section>
-      <h2 className="font-heading text-subsection tracking-tight">
-        Combina bien con
-      </h2>
+      <h2 className="font-heading text-subsection">Combina bien con</h2>
       <p className="mt-2 text-sm text-muted-foreground">
         Herramientas de otras categorías que suelen ir juntas en un mismo
         proyecto.
@@ -309,7 +276,7 @@ function PairsSection({ pairs }: { pairs: Tool[] }) {
           <li key={pair.slug} style={toneStyle(pair.category)}>
             <Link
               href={`/t/${pair.slug}`}
-              className="group flex items-center gap-3 rounded-xl bg-card p-3 ring-1 ring-foreground/10 transition outline-none hover:-translate-y-0.5 hover:ring-tone/40 focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="group flex items-center gap-3 rounded-xl bg-card p-3 ring-1 ring-foreground/10 transition outline-none hover:ring-tone/40 focus-visible:ring-3 focus-visible:ring-ring/50 motion-safe:hover:-translate-y-0.5"
             >
               <ToolMark tool={pair} className="size-9 text-sm" />
               <span className="min-w-0 flex-1">
@@ -333,7 +300,7 @@ function AlternativeRow({ tool, base }: { tool: Tool; base: Tool }) {
     <li className="flex items-center">
       <Link
         href={`/t/${tool.slug}`}
-        className="group flex min-w-0 flex-1 items-center gap-4 p-4 transition-colors outline-none hover:bg-muted/50 focus-visible:bg-muted/50"
+        className="group flex min-w-0 flex-1 items-center gap-4 p-4 transition-colors outline-none hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
       >
         <ToolMark tool={tool} className="size-9 text-sm" />
         <span className="min-w-0 flex-1">
@@ -348,14 +315,14 @@ function AlternativeRow({ tool, base }: { tool: Tool; base: Tool }) {
         </span>
         <ArrowRight
           aria-hidden
-          className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+          className="size-4 shrink-0 text-muted-foreground transition-transform motion-safe:group-hover:translate-x-0.5"
         />
       </Link>
       <Link
         href={`/comparar?a=${base.slug}&b=${tool.slug}`}
         aria-label={`Comparar ${base.name} con ${tool.name}`}
         title="Comparar"
-        className="mr-3 flex size-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        className="mr-2 flex size-11 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 sm:mr-3 sm:size-8"
       >
         <Columns2 aria-hidden className="size-4" />
       </Link>
@@ -363,8 +330,46 @@ function AlternativeRow({ tool, base }: { tool: Tool; base: Tool }) {
   )
 }
 
-function ClosingBanner({ tool }: { tool: Tool }) {
+function ClosingBanner({ tool, rival }: { tool: Tool; rival?: Tool }) {
   const verb = tool.category === "inspiracion" ? "explorar" : "probar"
+
+  if (rival) {
+    return (
+      <section className="relative mt-20 overflow-hidden rounded-2xl bg-card p-8 ring-1 ring-tone/25 sm:p-12">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-linear-to-br from-tone/20 via-transparent to-(--brand-violet)/15"
+        />
+        <div className="relative flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-md">
+            <h2 className="font-heading text-section tracking-tight text-balance">
+              ¿Dudas entre {tool.name} y {rival.name}?
+            </h2>
+            <p className="mt-3 text-sm text-pretty text-muted-foreground">
+              Ponlas lado a lado: precio, nivel, cuándo conviene cada una y cómo
+              se empieza.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href={`/comparar?a=${tool.slug}&b=${rival.slug}`}
+              className={buttonVariants()}
+            >
+              <Columns2 aria-hidden />
+              Comparar con {rival.name}
+            </Link>
+            <Link
+              href={`/c/${tool.category}`}
+              className={buttonVariants({ variant: "outline" })}
+            >
+              Ver la categoría
+              <ArrowRight aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="relative mt-20 overflow-hidden rounded-2xl bg-card p-8 ring-1 ring-tone/25 sm:p-12">

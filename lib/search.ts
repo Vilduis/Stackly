@@ -1,3 +1,5 @@
+import { CATEGORIES } from "@/lib/categories"
+import { LEVEL_LABELS, PRICING_LABELS } from "@/lib/labels"
 import type { CategorySlug, Level, Pricing, Tool } from "@/lib/types"
 
 export type Filters = {
@@ -18,7 +20,7 @@ export const EMPTY_FILTERS: Filters = {
 
 const DIACRITICS = new RegExp(String.raw`[\u0300-\u036f]`, "g")
 
-function normalize(text: string): string {
+export function normalize(text: string): string {
   return text.normalize("NFD").replace(DIACRITICS, "").toLowerCase().trim()
 }
 
@@ -80,4 +82,63 @@ export function hasActiveFilters(filters: Filters): boolean {
     filters.pricing !== "todos" ||
     filters.tags.length > 0
   )
+}
+
+type ParamReader = Pick<URLSearchParams, "get">
+
+function pick<T extends string>(value: string | null, allowed: string[]) {
+  return value !== null && allowed.includes(value) ? (value as T) : null
+}
+
+export function readFilters(params: ParamReader): Filters {
+  return {
+    query: params.get("q") ?? "",
+    category:
+      pick<CategorySlug>(
+        params.get("categoria"),
+        CATEGORIES.map((category) => category.slug)
+      ) ?? "todas",
+    level:
+      pick<Level>(params.get("nivel"), Object.keys(LEVEL_LABELS)) ?? "todos",
+    pricing:
+      pick<Pricing>(params.get("precio"), Object.keys(PRICING_LABELS)) ??
+      "todos",
+    tags: (params.get("etiquetas") ?? "").split(",").filter(Boolean),
+  }
+}
+
+export function readPage(params: ParamReader): number {
+  const page = Number.parseInt(params.get("pagina") ?? "", 10)
+
+  return Number.isInteger(page) && page > 1 ? page : 1
+}
+
+export function writeFilters(filters: Filters, page: number): string {
+  const params = new URLSearchParams()
+
+  if (filters.query) {
+    params.set("q", filters.query)
+  }
+
+  if (filters.category !== "todas") {
+    params.set("categoria", filters.category)
+  }
+
+  if (filters.level !== "todos") {
+    params.set("nivel", filters.level)
+  }
+
+  if (filters.pricing !== "todos") {
+    params.set("precio", filters.pricing)
+  }
+
+  if (filters.tags.length > 0) {
+    params.set("etiquetas", filters.tags.join(","))
+  }
+
+  if (page > 1) {
+    params.set("pagina", String(page))
+  }
+
+  return params.toString()
 }

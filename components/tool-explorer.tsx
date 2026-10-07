@@ -1,12 +1,12 @@
 "use client"
 
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useRef } from "react"
 import { Search, X } from "lucide-react"
 
 import { trackSpotlight } from "@/components/spotlight"
 import { ToolCard } from "@/components/tool-card"
-import { badgeVariants } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Chip } from "@/components/ui/chip"
 import { Input } from "@/components/ui/input"
 import {
   Pagination,
@@ -35,7 +35,6 @@ import {
   type Filters,
 } from "@/lib/search"
 import type { Tool } from "@/lib/types"
-import { cn } from "@/lib/utils"
 
 const MAX_TAGS = 10
 
@@ -60,16 +59,17 @@ const CATEGORY_ITEMS = {
 
 export function ToolExplorer({
   tools,
-  initialQuery = "",
+  filters,
+  page,
+  onFiltersChange,
+  onPageChange,
 }: {
   tools: Tool[]
-  initialQuery?: string
+  filters: Filters
+  page: number
+  onFiltersChange: (filters: Filters) => void
+  onPageChange: (page: number) => void
 }) {
-  const [filters, setFilters] = useState<Filters>({
-    ...EMPTY_FILTERS,
-    query: initialQuery,
-  })
-  const [page, setPage] = useState(1)
   const resultsRef = useRef<HTMLDivElement>(null)
 
   const tags = useMemo(() => collectTags(tools, MAX_TAGS), [tools])
@@ -77,21 +77,36 @@ export function ToolExplorer({
   const isFiltered = hasActiveFilters(filters)
 
   const pageCount = Math.ceil(results.length / PAGE_SIZE)
-  const visible = results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+  const current = Math.min(page, Math.max(pageCount, 1))
+  const visible = results.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE)
 
   function update(patch: Partial<Filters>) {
-    setFilters((current) => ({ ...current, ...patch }))
-    setPage(1)
+    onFiltersChange({ ...filters, ...patch })
+    onPageChange(1)
   }
 
   function clear() {
-    setFilters(EMPTY_FILTERS)
-    setPage(1)
+    onFiltersChange(EMPTY_FILTERS)
+    onPageChange(1)
   }
 
   function goToPage(next: number) {
-    setPage(next)
-    resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    onPageChange(next)
+
+    const grid = resultsRef.current
+
+    if (!grid) {
+      return
+    }
+
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches
+
+    grid.focus({ preventScroll: true })
+    grid.scrollIntoView({
+      behavior: smooth ? "smooth" : "auto",
+      block: "start",
+    })
   }
 
   function toggleTag(tag: string) {
@@ -103,7 +118,7 @@ export function ToolExplorer({
   }
 
   return (
-    <section>
+    <section aria-label="Explorador de herramientas">
       <div className="flex flex-col gap-3 sm:flex-row">
         <div className="relative flex-1">
           <Search
@@ -116,7 +131,7 @@ export function ToolExplorer({
             onChange={(event) => update({ query: event.target.value })}
             placeholder="Buscar por nombre o tecnología…"
             aria-label="Buscar herramientas"
-            className="pl-8"
+            className="pl-8 max-sm:h-11"
           />
         </div>
 
@@ -125,7 +140,7 @@ export function ToolExplorer({
           items={CATEGORY_ITEMS}
           value={filters.category}
           onChange={(category) => update({ category })}
-          className="w-full sm:w-52"
+          className="w-full max-sm:h-11 sm:w-52"
         />
 
         <FilterSelect
@@ -133,7 +148,7 @@ export function ToolExplorer({
           items={LEVEL_ITEMS}
           value={filters.level}
           onChange={(level) => update({ level })}
-          className="w-full sm:w-44"
+          className="w-full max-sm:h-11 sm:w-44"
         />
 
         <FilterSelect
@@ -141,60 +156,71 @@ export function ToolExplorer({
           items={PRICING_ITEMS}
           value={filters.pricing}
           onChange={(pricing) => update({ pricing })}
-          className="w-full sm:w-44"
+          className="w-full max-sm:h-11 sm:w-44"
         />
       </div>
 
       {tags.length > 0 ? (
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {tags.map((tag) => {
-            const active = filters.tags.includes(tag)
-
-            return (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => toggleTag(tag)}
-                aria-pressed={active}
-                className={cn(
-                  badgeVariants({ variant: active ? "default" : "outline" }),
-                  "cursor-pointer font-mono transition-colors max-sm:h-8 max-sm:px-3",
-                  !active && "text-muted-foreground hover:bg-muted"
-                )}
-              >
-                {tag}
-              </button>
-            )
-          })}
+        <div
+          role="group"
+          aria-label="Etiquetas"
+          className="mt-4 flex flex-wrap gap-1.5"
+        >
+          {tags.map((tag) => (
+            <Chip
+              key={tag}
+              pressed={filters.tags.includes(tag)}
+              onClick={() => toggleTag(tag)}
+            >
+              {tag}
+            </Chip>
+          ))}
         </div>
       ) : null}
 
-      <div className="mt-6 flex items-center gap-3">
-        <p className="font-mono text-xs text-muted-foreground tabular-nums">
+      <div className="mt-6 flex min-h-8 items-center gap-3">
+        <p
+          role="status"
+          aria-live="polite"
+          className="text-xs text-muted-foreground tabular-nums"
+        >
           {countLabel(results.length, "herramienta")}
-          {pageCount > 1 ? ` · página ${page} de ${pageCount}` : null}
+          {pageCount > 1 ? ` · página ${current} de ${pageCount}` : null}
         </p>
         {isFiltered ? (
-          <Button variant="ghost" size="sm" onClick={clear}>
-            <X />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clear}
+            className="max-sm:h-10"
+          >
+            <X aria-hidden />
             Limpiar filtros
           </Button>
         ) : null}
       </div>
 
       {results.length === 0 ? (
-        <p className="mt-8 text-sm text-muted-foreground">
-          No hay herramientas que encajen con esos filtros. Prueba a quitar
-          alguno.
-        </p>
+        <div className="mt-8 max-w-md">
+          <p className="text-sm text-muted-foreground">
+            No hay herramientas que encajen con esos filtros. Quita alguno o
+            busca con otras palabras.
+          </p>
+          <Button variant="outline" onClick={clear} className="mt-4">
+            <X aria-hidden />
+            Limpiar filtros
+          </Button>
+        </div>
       ) : (
         <div
           ref={resultsRef}
+          tabIndex={-1}
+          aria-label="Resultados"
           onPointerMove={trackSpotlight}
-          className="mt-4 grid scroll-mt-8 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-4 grid scroll-mt-20 gap-4 outline-none sm:grid-cols-2 lg:grid-cols-3"
         >
           {visible.map((tool) => (
-            <ToolCard key={tool.slug} tool={tool} showCategory />
+            <ToolCard key={tool.slug} tool={tool} showCategory titleAs="h2" />
           ))}
         </div>
       )}
@@ -204,12 +230,12 @@ export function ToolExplorer({
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                disabled={page === 1}
-                onClick={() => goToPage(page - 1)}
+                disabled={current === 1}
+                onClick={() => goToPage(current - 1)}
               />
             </PaginationItem>
 
-            {getPageItems(page, pageCount).map((item, index) =>
+            {getPageItems(current, pageCount).map((item, index) =>
               item === null ? (
                 <PaginationItem key={`hueco-${index}`}>
                   <PaginationEllipsis />
@@ -217,7 +243,7 @@ export function ToolExplorer({
               ) : (
                 <PaginationItem key={item}>
                   <PaginationLink
-                    isActive={item === page}
+                    isActive={item === current}
                     aria-label={`Ir a la página ${item}`}
                     onClick={() => goToPage(item)}
                   >
@@ -229,8 +255,8 @@ export function ToolExplorer({
 
             <PaginationItem>
               <PaginationNext
-                disabled={page === pageCount}
-                onClick={() => goToPage(page + 1)}
+                disabled={current === pageCount}
+                onClick={() => goToPage(current + 1)}
               />
             </PaginationItem>
           </PaginationContent>

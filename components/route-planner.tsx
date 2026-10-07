@@ -9,15 +9,14 @@ import { ToneEdge } from "@/components/tone-edge"
 import { PricingBadge } from "@/components/tool-badges"
 import { ToolMark } from "@/components/tool-mark"
 import { Card } from "@/components/ui/card"
+import { Chip } from "@/components/ui/chip"
+import { useCopy } from "@/hooks/use-copy"
 import { getCategory } from "@/lib/categories"
 import { LEVEL_LABELS, LEVEL_STEPS, PRICING_LABELS } from "@/lib/labels"
 import { combines, ROUTE_PRESETS, sortByLevel } from "@/lib/routes"
 import { toneStyle } from "@/lib/tones"
 import type { Level, Pricing } from "@/lib/types"
 import type { PlannerTool } from "@/lib/routes"
-import { cn } from "@/lib/utils"
-
-const COPIED_MS = 1600
 
 export function RoutePlanner({ tools }: { tools: PlannerTool[] }) {
   const bySlug = useMemo(
@@ -27,7 +26,7 @@ export function RoutePlanner({ tools }: { tools: PlannerTool[] }) {
   const [presetId, setPresetId] = useState(ROUTE_PRESETS[0].id)
   const [route, setRoute] = useState<string[]>(ROUTE_PRESETS[0].stations)
   const [open, setOpen] = useState<number | null>(null)
-  const [copied, setCopied] = useState(false)
+  const { copied, copy } = useCopy()
 
   const preset =
     ROUTE_PRESETS.find((item) => item.id === presetId) ?? ROUTE_PRESETS[0]
@@ -55,26 +54,12 @@ export function RoutePlanner({ tools }: { tools: PlannerTool[] }) {
     setOpen(null)
   }
 
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(
-        stack.map((tool) => tool.name).join(" + ")
-      )
-      setCopied(true)
-      setTimeout(() => setCopied(false), COPIED_MS)
-    } catch {
-      setCopied(false)
-    }
-  }
-
   return (
     <Card size="sm" className="relative gap-0 py-0">
       <ToneEdge />
 
       <div className="border-b border-border p-4 sm:p-5">
-        <h2 className="font-heading text-subsection tracking-tight">
-          ¿Qué vas a construir?
-        </h2>
+        <h2 className="font-heading text-subsection">¿Qué vas a construir?</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Elige un proyecto y te proponemos un stack que combina entre sí.
         </p>
@@ -83,26 +68,15 @@ export function RoutePlanner({ tools }: { tools: PlannerTool[] }) {
           aria-label="Tipo de proyecto"
           className="mt-4 flex flex-wrap gap-1.5"
         >
-          {ROUTE_PRESETS.map((item) => {
-            const active = item.id === presetId
-
-            return (
-              <button
-                key={item.id}
-                type="button"
-                aria-pressed={active}
-                onClick={() => choose(item.id)}
-                className={cn(
-                  "inline-flex h-7 items-center rounded-full px-3 text-xs font-medium ring-1 transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:h-10 max-sm:px-3.5",
-                  active
-                    ? "bg-primary text-primary-foreground ring-primary"
-                    : "text-muted-foreground ring-border hover:bg-muted hover:text-foreground"
-                )}
-              >
-                {item.name}
-              </button>
-            )
-          })}
+          {ROUTE_PRESETS.map((item) => (
+            <Chip
+              key={item.id}
+              pressed={item.id === presetId}
+              onClick={() => choose(item.id)}
+            >
+              {item.name}
+            </Chip>
+          ))}
         </div>
       </div>
 
@@ -140,15 +114,15 @@ export function RoutePlanner({ tools }: { tools: PlannerTool[] }) {
                 <div className="min-w-0 flex-1">
                   <Link
                     href={`/t/${tool.slug}`}
-                    className="block truncate text-sm font-medium hover:underline"
+                    className="block truncate rounded-sm text-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
                   >
                     {tool.name}
                   </Link>
-                  <span className="flex items-center gap-1 text-xs text-tone">
+                  <span className="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-xs text-tone">
                     <CategoryIcon category={tool.category} className="size-3" />
-                    {category?.name}
+                    <span className="whitespace-nowrap">{category?.name}</span>
                     {partner ? (
-                      <span className="ml-1.5 inline-flex items-center gap-1 text-muted-foreground">
+                      <span className="inline-flex items-center gap-1 whitespace-nowrap text-muted-foreground max-sm:w-full sm:ml-1.5">
                         <Link2 aria-hidden className="size-3" />
                         combina con {partner.name}
                       </span>
@@ -179,27 +153,20 @@ export function RoutePlanner({ tools }: { tools: PlannerTool[] }) {
                     const current = other.slug === tool.slug
 
                     return (
-                      <button
+                      <Chip
                         key={other.slug}
-                        type="button"
-                        aria-pressed={current}
+                        accent="tone"
+                        pressed={current}
                         onClick={() => swap(index, other.slug)}
-                        className={cn(
-                          "inline-flex h-7 items-center gap-1.5 rounded-full pr-2.5 pl-1 text-xs font-medium ring-1 transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:h-10 max-sm:pl-2",
-                          current
-                            ? "bg-tone/15 ring-tone/40"
-                            : "ring-border hover:bg-muted"
-                        )}
+                        className="pr-2.5 pl-1 max-sm:pl-2"
                       >
                         <ToolMark
                           tool={other}
                           className="size-5 rounded-full text-[0.625rem]"
                         />
                         {other.name}
-                        {current ? (
-                          <Check aria-hidden className="size-3" />
-                        ) : null}
-                      </button>
+                        {current ? <Check aria-hidden /> : null}
+                      </Chip>
                     )
                   })}
                 </div>
@@ -214,7 +181,7 @@ export function RoutePlanner({ tools }: { tools: PlannerTool[] }) {
         edited={edited}
         copied={copied}
         onReset={() => choose(preset.id)}
-        onCopy={copy}
+        onCopy={() => copy(stack.map((tool) => tool.name).join(" + "))}
       />
     </Card>
   )
@@ -248,7 +215,7 @@ function StackSummary({
 
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border px-4 py-3 sm:px-5">
-      <p className="flex-1 font-mono text-xs text-muted-foreground tabular-nums">
+      <p className="flex-1 text-xs text-muted-foreground tabular-nums">
         {prices
           .map(
             ({ pricing, count }) =>

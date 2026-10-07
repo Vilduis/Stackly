@@ -4,10 +4,8 @@ import type { Level, Pricing } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
 const PRICING_STYLES: Record<Pricing, string> = {
-  gratis:
-    "border-positive/25 bg-positive/10 text-positive",
-  freemium:
-    "border-caution/25 bg-caution/10 text-caution",
+  gratis: "border-positive/25 bg-positive/10 text-positive",
+  freemium: "border-caution/25 bg-caution/10 text-caution",
   pago: "border-negative/25 bg-negative/10 text-negative",
 }
 

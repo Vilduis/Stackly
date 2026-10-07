@@ -12,6 +12,14 @@ export function toPlannerTool(tool: Tool): PlannerTool {
   return { slug, name, category, pricing, level, pairsWith }
 }
 
+export type CompareOption = Pick<Tool, "slug" | "name" | "category">
+
+export function toCompareOption(tool: Tool): CompareOption {
+  const { slug, name, category } = tool
+
+  return { slug, name, category }
+}
+
 type RoutePreset = {
   id: string
   name: string

@@ -60,7 +60,7 @@ function PaginationLink({
     <Button
       variant={isActive ? "outline" : "ghost"}
       size={size}
-      className={cn(className)}
+      className={cn("max-sm:h-11 max-sm:min-w-11", className)}
       nativeButton={href === undefined}
       render={
         href === undefined ? (
@@ -119,7 +119,6 @@ function PaginationEllipsis({
 }: React.ComponentProps<"span">) {
   return (
     <span
-      aria-hidden
       data-slot="pagination-ellipsis"
       className={cn(
         "flex size-9 items-center justify-center [&_svg:not([class*='size-'])]:size-4",
@@ -127,7 +126,7 @@ function PaginationEllipsis({
       )}
       {...props}
     >
-      <MoreHorizontalIcon />
+      <MoreHorizontalIcon aria-hidden />
       <span className="sr-only">Más páginas</span>
     </span>
   )

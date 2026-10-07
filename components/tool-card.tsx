@@ -13,19 +13,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Chip } from "@/components/ui/chip"
 import { getCategory } from "@/lib/categories"
 import { toneStyle } from "@/lib/tones"
 import type { Tool } from "@/lib/types"
-import { cn } from "@/lib/utils"
 
 export function ToolCard({
   tool,
   showCategory = false,
+  titleAs = "h3",
   comparing = false,
   onCompare,
 }: {
   tool: Tool
   showCategory?: boolean
+  titleAs?: "h2" | "h3"
   comparing?: boolean
   onCompare?: () => void
 }) {
@@ -35,13 +37,13 @@ export function ToolCard({
     <Card
       data-spotlight
       style={toneStyle(tool.category)}
-      className="spotlight-glow h-full transition duration-200 hover:-translate-y-0.5 hover:shadow-md hover:ring-tone/35"
+      className="spotlight-glow h-full transition duration-200 hover:shadow-md hover:ring-tone/35 motion-safe:hover:-translate-y-0.5"
     >
       <ToneEdge />
       <CardHeader>
         <div className="flex items-center gap-3">
           <ToolMark tool={tool} />
-          <CardTitle className="min-w-0 flex-1">
+          <CardTitle as={titleAs} className="min-w-0 flex-1">
             <Link
               href={`/t/${tool.slug}`}
               className="outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-3 focus-visible:after:ring-ring/50"
@@ -67,30 +69,26 @@ export function ToolCard({
 
       <CardFooter className="gap-4 text-xs">
         <ToolLink href={tool.website}>
-          <ExternalLink />
+          <ExternalLink aria-hidden />
           Web
         </ToolLink>
         {tool.docs ? (
           <ToolLink href={tool.docs}>
-            <BookOpen />
+            <BookOpen aria-hidden />
             Docs
           </ToolLink>
         ) : null}
         {onCompare ? (
-          <button
-            type="button"
-            aria-pressed={comparing}
+          <Chip
+            accent="tone"
+            pressed={comparing}
             onClick={onCompare}
-            className={cn(
-              "relative z-10 ml-auto inline-flex h-7 items-center gap-1.5 rounded-md px-2 font-medium ring-1 transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:h-10 max-sm:px-3 [&>svg]:size-3.5",
-              comparing
-                ? "bg-tone/15 text-foreground ring-tone/40"
-                : "text-muted-foreground ring-border hover:bg-muted hover:text-foreground"
-            )}
+            aria-label={`Comparar ${tool.name}`}
+            className="relative z-10 ml-auto"
           >
             {comparing ? <Check aria-hidden /> : <Columns2 aria-hidden />}
             Comparar
-          </button>
+          </Chip>
         ) : null}
       </CardFooter>
     </Card>
@@ -109,7 +107,7 @@ function ToolLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="relative z-10 inline-flex items-center gap-1.5 rounded-sm text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:min-h-10 [&>svg]:size-3.5"
+      className="relative z-10 inline-flex items-center gap-1.5 rounded-sm text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:min-h-10 max-sm:px-1 [&>svg]:size-3.5"
     >
       {children}
     </a>

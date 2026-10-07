@@ -1,43 +1,47 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { ArrowLeftRight, Check, ExternalLink, X } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { ArrowLeftRight, ExternalLink } from "lucide-react"
 
 import { CategoryIcon } from "@/components/category-icon"
 import { CodeSnippet } from "@/components/code-snippet"
+import { ReasonList } from "@/components/reason-list"
 import { ToneEdge } from "@/components/tone-edge"
 import { LevelBadge, PricingBadge } from "@/components/tool-badges"
+import { ToolCombobox } from "@/components/tool-combobox"
 import { ToolMark } from "@/components/tool-mark"
 import { Button } from "@/components/ui/button"
-import { CATEGORIES, getCategory } from "@/lib/categories"
-import { combines } from "@/lib/routes"
+import { getCategory } from "@/lib/categories"
+import { combines, type CompareOption } from "@/lib/routes"
 import { toneStyle } from "@/lib/tones"
 import type { Tool } from "@/lib/types"
 import { cn } from "@/lib/utils"
-
-const DEFAULT_PAIR = ["nextjs", "astro"]
 
 type Row = {
   label: string
   render: (tool: Tool) => React.ReactNode
 }
 
-export function Comparator({ tools }: { tools: Tool[] }) {
+export function Comparator({
+  options,
+  a,
+  b,
+}: {
+  options: CompareOption[]
+  a: Tool
+  b: Tool
+}) {
   const router = useRouter()
   const pathname = usePathname()
-  const params = useSearchParams()
-  const bySlug = new Map(tools.map((tool) => [tool.slug, tool]))
-
-  const a = bySlug.get(params.get("a") ?? "") ?? bySlug.get(DEFAULT_PAIR[0])
-  const b = bySlug.get(params.get("b") ?? "") ?? bySlug.get(DEFAULT_PAIR[1])
-
-  if (!a || !b) {
-    return null
-  }
+  const [pending, startTransition] = useTransition()
+  const bySlug = new Map(options.map((option) => [option.slug, option]))
 
   function go(nextA: string, nextB: string) {
-    router.replace(`${pathname}?a=${nextA}&b=${nextB}`, { scroll: false })
+    startTransition(() => {
+      router.replace(`${pathname}?a=${nextA}&b=${nextB}`, { scroll: false })
+    })
   }
 
   const pair = [a, b]
@@ -66,11 +70,11 @@ export function Comparator({ tools }: { tools: Tool[] }) {
     },
     {
       label: "Úsalo si…",
-      render: (tool) => <Reasons items={tool.useIf} positive />,
+      render: (tool) => <ReasonList items={tool.useIf} positive />,
     },
     {
       label: "Mejor evítalo si…",
-      render: (tool) => <Reasons items={tool.avoidIf} positive={false} />,
+      render: (tool) => <ReasonList items={tool.avoidIf} positive={false} />,
     },
     {
       label: "Primer paso",
@@ -131,12 +135,16 @@ export function Comparator({ tools }: { tools: Tool[] }) {
   ]
 
   return (
-    <div>
+    <div
+      aria-busy={pending}
+      className="transition-opacity duration-200 aria-busy:opacity-60"
+    >
       <div className="grid items-end gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <ToolSelect
+        <ToolCombobox
           label="Primera herramienta"
-          value={a.slug}
-          tools={tools}
+          value={a}
+          rival={b}
+          options={options}
           onChange={(slug) => go(slug, b.slug)}
         />
         <Button
@@ -144,14 +152,15 @@ export function Comparator({ tools }: { tools: Tool[] }) {
           size="icon"
           onClick={() => go(b.slug, a.slug)}
           aria-label="Intercambiar"
-          className="justify-self-center max-sm:size-11"
+          className="size-11 justify-self-center sm:size-10"
         >
           <ArrowLeftRight />
         </Button>
-        <ToolSelect
+        <ToolCombobox
           label="Segunda herramienta"
-          value={b.slug}
-          tools={tools}
+          value={b}
+          rival={a}
+          options={options}
           onChange={(slug) => go(a.slug, slug)}
         />
       </div>
@@ -249,7 +258,7 @@ function ToolHeading({
   tool,
   compact = false,
 }: {
-  tool: Tool
+  tool: CompareOption
   compact?: boolean
 }) {
   const category = getCategory(tool.category)
@@ -270,7 +279,7 @@ function ToolHeading({
         <div className="min-w-0">
           <Link
             href={`/t/${tool.slug}`}
-            className="block font-heading text-subsection tracking-tight hover:underline"
+            className="block font-heading text-subsection hover:underline"
           >
             {tool.name}
           </Link>
@@ -284,65 +293,5 @@ function ToolHeading({
         </div>
       </div>
     </>
-  )
-}
-
-function ToolSelect({
-  label,
-  value,
-  tools,
-  onChange,
-}: {
-  label: string
-  value: string
-  tools: Tool[]
-  onChange: (slug: string) => void
-}) {
-  return (
-    <label className="grid gap-1.5">
-      <span className="text-sm text-muted-foreground">{label}</span>
-      <select
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        className="h-9 w-full rounded-md border border-input bg-transparent px-2.5 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:h-11 dark:bg-input/30 dark:hover:bg-input/50 [&_optgroup]:bg-popover [&_option]:bg-popover"
-      >
-        {CATEGORIES.map((category) => (
-          <optgroup key={category.slug} label={category.name}>
-            {tools
-              .filter((tool) => tool.category === category.slug)
-              .map((tool) => (
-                <option key={tool.slug} value={tool.slug}>
-                  {tool.name}
-                </option>
-              ))}
-          </optgroup>
-        ))}
-      </select>
-    </label>
-  )
-}
-
-function Reasons({ items, positive }: { items: string[]; positive: boolean }) {
-  const Icon = positive ? Check : X
-
-  return (
-    <ul className="space-y-2.5">
-      {items.map((item) => (
-        <li key={item} className="flex gap-2.5 text-sm text-muted-foreground">
-          <span
-            aria-hidden
-            className={cn(
-              "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border",
-              positive
-                ? "border-positive/25 bg-positive/10 text-positive"
-                : "border-negative/25 bg-negative/10 text-negative"
-            )}
-          >
-            <Icon className="size-3.5" />
-          </span>
-          {item}
-        </li>
-      ))}
-    </ul>
   )
 }

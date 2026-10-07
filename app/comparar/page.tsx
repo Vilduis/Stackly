@@ -1,11 +1,13 @@
 import type { Metadata } from "next"
-import { Suspense } from "react"
+import { notFound } from "next/navigation"
 
 import { Comparator } from "@/components/comparator"
 import { Separator } from "@/components/ui/separator"
-import { Skeleton } from "@/components/ui/skeleton"
 import { buildMetadata } from "@/lib/metadata"
-import { getTools } from "@/lib/tools"
+import { toCompareOption } from "@/lib/routes"
+import { getTool, getTools } from "@/lib/tools"
+
+const DEFAULT_PAIR = ["nextjs", "astro"] as const
 
 export const metadata: Metadata = buildMetadata({
   title: "Comparar",
@@ -14,8 +16,29 @@ export const metadata: Metadata = buildMetadata({
   path: "/comparar",
 })
 
-export default async function ComparePage() {
-  const tools = await getTools()
+type ComparePageProps = {
+  searchParams: Promise<{ a?: string | string[]; b?: string | string[] }>
+}
+
+function first(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value
+}
+
+export default async function ComparePage({ searchParams }: ComparePageProps) {
+  const params = await searchParams
+  const [tools, a, b] = await Promise.all([
+    getTools(),
+    getTool(first(params.a) ?? DEFAULT_PAIR[0]).then(
+      (tool) => tool ?? getTool(DEFAULT_PAIR[0])
+    ),
+    getTool(first(params.b) ?? DEFAULT_PAIR[1]).then(
+      (tool) => tool ?? getTool(DEFAULT_PAIR[1])
+    ),
+  ])
+
+  if (!a || !b) {
+    notFound()
+  }
 
   return (
     <main className="container-page py-16">
@@ -31,9 +54,7 @@ export default async function ComparePage() {
 
       <Separator className="my-8" />
 
-      <Suspense fallback={<Skeleton className="h-96" />}>
-        <Comparator tools={tools} />
-      </Suspense>
+      <Comparator options={tools.map(toCompareOption)} a={a} b={b} />
     </main>
   )
 }

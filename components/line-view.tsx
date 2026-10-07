@@ -6,12 +6,11 @@ import { ArrowRight, Columns2, X } from "lucide-react"
 
 import { trackSpotlight } from "@/components/spotlight"
 import { ToolCard } from "@/components/tool-card"
-import { badgeVariants } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
+import { Chip } from "@/components/ui/chip"
 import { countLabel } from "@/lib/format"
 import { LEVEL_LABELS, PRICING_LABELS } from "@/lib/labels"
 import type { Level, Pricing, Tool } from "@/lib/types"
-import { cn } from "@/lib/utils"
 
 const LEVELS: Level[] = ["principiante", "intermedio", "avanzado"]
 
@@ -52,24 +51,25 @@ export function LineView({ tools }: { tools: Tool[] }) {
             aria-label="Filtrar por precio"
             className="flex flex-wrap gap-1.5"
           >
-            <FilterChip
-              active={pricing === null}
-              onClick={() => setPricing(null)}
-            >
+            <Chip pressed={pricing === null} onClick={() => setPricing(null)}>
               Todos los precios
-            </FilterChip>
+            </Chip>
             {prices.map((item) => (
-              <FilterChip
+              <Chip
                 key={item}
-                active={pricing === item}
+                pressed={pricing === item}
                 onClick={() => setPricing(pricing === item ? null : item)}
               >
                 {PRICING_LABELS[item]}
-              </FilterChip>
+              </Chip>
             ))}
           </div>
         ) : null}
-        <p className="font-mono text-xs text-muted-foreground tabular-nums">
+        <p
+          role="status"
+          aria-live="polite"
+          className="text-xs text-muted-foreground tabular-nums"
+        >
           {countLabel(visible.length, "herramienta")} · de principiante a
           avanzado
         </p>
@@ -81,7 +81,7 @@ export function LineView({ tools }: { tools: Tool[] }) {
           <button
             type="button"
             onClick={() => setPricing(null)}
-            className="font-medium text-foreground underline underline-offset-4"
+            className="inline-flex min-h-10 items-center rounded-sm font-medium text-foreground underline underline-offset-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:min-h-0"
           >
             Ver todas
           </button>
@@ -93,11 +93,11 @@ export function LineView({ tools }: { tools: Tool[] }) {
               <div className="flex items-baseline gap-3">
                 <h2
                   id={`nivel-${group.level}`}
-                  className="font-heading text-subsection tracking-tight"
+                  className="font-heading text-subsection"
                 >
                   {LEVEL_LABELS[group.level]}
                 </h2>
-                <span className="font-mono text-xs text-muted-foreground tabular-nums">
+                <span className="text-xs text-muted-foreground tabular-nums">
                   {countLabel(group.tools.length, "herramienta")}
                 </span>
               </div>
@@ -146,14 +146,21 @@ export function LineView({ tools }: { tools: Tool[] }) {
             type="button"
             onClick={() => setCompare([])}
             aria-label="Quitar selección"
-            className={buttonVariants({ variant: "ghost", size: "icon-sm" })}
+            className={buttonVariants({
+              variant: "ghost",
+              size: "icon-sm",
+              className: "max-sm:size-10",
+            })}
           >
             <X />
           </button>
           {selected.length === 2 ? (
             <Link
               href={`/comparar?a=${selected[0].slug}&b=${selected[1].slug}`}
-              className={buttonVariants({ size: "sm" })}
+              className={buttonVariants({
+                size: "sm",
+                className: "max-sm:h-10",
+              })}
             >
               Comparar
               <ArrowRight />
@@ -162,30 +169,5 @@ export function LineView({ tools }: { tools: Tool[] }) {
         </div>
       ) : null}
     </section>
-  )
-}
-
-function FilterChip({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean
-  onClick: () => void
-  children: React.ReactNode
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={active}
-      onClick={onClick}
-      className={cn(
-        badgeVariants({ variant: active ? "default" : "outline" }),
-        "h-7 cursor-pointer px-3 transition-colors max-sm:h-10 max-sm:px-4",
-        !active && "text-muted-foreground hover:bg-muted hover:text-foreground"
-      )}
-    >
-      {children}
-    </button>
   )
 }

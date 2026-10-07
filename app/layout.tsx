@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 
 import "./globals.css"
@@ -50,6 +50,13 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f3f8" },
+    { media: "(prefers-color-scheme: dark)", color: "#120a1c" },
+  ],
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -60,9 +67,8 @@ export default function RootLayout({
       lang="es"
       suppressHydrationWarning
       className={cn(
-        "dark antialiased",
+        "antialiased",
         fontMono.variable,
-        "font-sans",
         fontSans.variable,
         instrumentSerif.variable
       )}
@@ -72,7 +78,9 @@ export default function RootLayout({
           <div className="relative flex min-h-svh flex-col">
             <Aurora />
             <SiteHeader />
-            <div className="flex-1">{children}</div>
+            <div id="contenido" tabIndex={-1} className="flex-1 outline-none">
+              {children}
+            </div>
             <SiteFooter />
           </div>
         </ThemeProvider>

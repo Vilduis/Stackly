@@ -47,7 +47,7 @@ export default async function HomePage() {
     <main className="hero-grid">
       <div className="container-page pt-16 pb-4 sm:pt-24 sm:pb-8">
         <section className="relative grid items-start gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-6 lg:pt-16">
+          <div className="min-w-0 lg:col-span-6 lg:pt-16">
             <h1 className="max-w-xl font-heading text-hero tracking-tight text-balance">
               Elige las herramientas de tu{" "}
               <span className="italic">próxima</span> web
@@ -67,7 +67,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="lg:col-span-6">
+          <div className="min-w-0 lg:col-span-6">
             <RoutePlanner tools={tools.map(toPlannerTool)} />
           </div>
         </section>
@@ -76,7 +76,7 @@ export default async function HomePage() {
           <h2 className="font-heading text-section tracking-tight">
             Categorías
           </h2>
-          <p className="mt-2 max-w-lg text-sm text-muted-foreground">
+          <p className="mt-2 max-w-lg text-sm text-pretty text-muted-foreground">
             Nueve áreas en las que se divide construir una web. Entra en la que
             te toque ahora.
           </p>
@@ -90,7 +90,7 @@ export default async function HomePage() {
               >
                 <Card
                   data-spotlight
-                  className="spotlight-glow h-full transition duration-200 group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:ring-tone/35"
+                  className="spotlight-glow h-full transition duration-200 group-hover:shadow-md group-hover:ring-tone/35 motion-safe:group-hover:-translate-y-0.5"
                 >
                   <ToneEdge />
                   <CardHeader>
@@ -101,10 +101,12 @@ export default async function HomePage() {
                           className="size-4.5 text-tone"
                         />
                       </span>
-                      <CardTitle className="flex-1">{category.name}</CardTitle>
+                      <CardTitle as="h3" className="flex-1">
+                        {category.name}
+                      </CardTitle>
                       <ArrowRight
                         aria-hidden
-                        className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+                        className="size-4 text-muted-foreground transition-transform motion-safe:group-hover:translate-x-0.5"
                       />
                     </div>
                     <CardDescription className="mt-2">
@@ -121,7 +123,7 @@ export default async function HomePage() {
                           />
                         ))}
                       </div>
-                      <span className="font-mono text-xs text-muted-foreground tabular-nums">
+                      <span className="text-xs text-muted-foreground tabular-nums">
                         {counts[category.slug] ?? 0} herramientas
                       </span>
                     </div>

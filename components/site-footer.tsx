@@ -26,13 +26,13 @@ export async function SiteFooter() {
               Catálogo de herramientas para crear páginas web. Para cuando sabes
               qué quieres construir, pero no con qué.
             </p>
-            <p className="mt-5 font-mono text-xs tracking-tight text-muted-foreground tabular-nums">
+            <p className="mt-5 text-xs text-muted-foreground tabular-nums">
               {tools.length} herramientas · {CATEGORIES.length} categorías
             </p>
           </div>
 
           <FooterColumn title="Categorías" className="lg:col-span-4">
-            <ul className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2">
+            <ul className="mt-3 grid grid-cols-2 gap-x-6 sm:gap-y-2">
               {CATEGORIES.map((category) => (
                 <FooterLink key={category.slug} href={`/c/${category.slug}`}>
                   {category.name}
@@ -42,7 +42,7 @@ export async function SiteFooter() {
           </FooterColumn>
 
           <FooterColumn title="Explorar" className="lg:col-span-3">
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-3 sm:space-y-2">
               <FooterLink href="/">Inicio</FooterLink>
               <FooterLink href="/comparar">Comparar herramientas</FooterLink>
               <FooterLink href="/buscar">Buscar herramientas</FooterLink>
@@ -92,7 +92,7 @@ function FooterLink({
     <li>
       <Link
         href={href}
-        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="inline-flex items-center rounded-sm text-sm text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 max-sm:min-h-11"
       >
         {children}
       </Link>

@@ -1,10 +1,9 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Suspense } from "react"
+import { connection } from "next/server"
 import { ArrowLeft } from "lucide-react"
 
 import { SearchExplorer } from "@/components/search-explorer"
-import { Skeleton } from "@/components/ui/skeleton"
 import { buildMetadata } from "@/lib/metadata"
 import { getTools } from "@/lib/tools"
 
@@ -16,6 +15,7 @@ export const metadata: Metadata = buildMetadata({
 })
 
 export default async function SearchPage() {
+  await connection()
   const tools = await getTools()
 
   return (
@@ -38,27 +38,7 @@ export default async function SearchPage() {
         </p>
       </header>
 
-      <Suspense fallback={<ExplorerSkeleton />}>
-        <SearchExplorer tools={tools} />
-      </Suspense>
+      <SearchExplorer tools={tools} />
     </main>
-  )
-}
-
-function ExplorerSkeleton() {
-  return (
-    <div>
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Skeleton className="h-9 flex-1" />
-        <Skeleton className="h-9 sm:w-52" />
-        <Skeleton className="h-9 sm:w-44" />
-        <Skeleton className="h-9 sm:w-44" />
-      </div>
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }, (_, index) => (
-          <Skeleton key={index} className="h-48" />
-        ))}
-      </div>
-    </div>
   )
 }

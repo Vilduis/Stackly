@@ -1,7 +1,6 @@
 import Link from "next/link"
 
-import { badgeVariants } from "@/components/ui/badge"
-import { cn } from "@/lib/utils"
+import { chipVariants } from "@/components/ui/chip"
 
 const SUGGESTIONS = ["React", "Tailwind", "CSS", "Postgres", "iconos"]
 
@@ -13,10 +12,7 @@ export function SearchSuggestions() {
         <Link
           key={term}
           href={`/buscar?q=${encodeURIComponent(term)}`}
-          className={cn(
-            badgeVariants({ variant: "outline" }),
-            "font-mono text-muted-foreground transition-colors hover:bg-muted hover:text-foreground max-sm:h-9 max-sm:px-3"
-          )}
+          className={chipVariants()}
         >
           {term}
         </Link>
